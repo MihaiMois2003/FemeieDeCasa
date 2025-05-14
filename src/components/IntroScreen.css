@@ -1,0 +1,296 @@
+/* Stiluri pentru IntroScreen */
+.intro-screen {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+}
+
+/* Fundal cu gradient și efect de animație */
+.intro-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #300606, #1a0303);
+  z-index: -1;
+  overflow: hidden;
+}
+
+.intro-background::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  animation: pulseBackground 15s infinite;
+}
+
+/* Conținutul introductiv */
+.intro-content {
+  max-width: 90%;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  padding: 2rem;
+}
+
+/* Stiluri pentru cutiile de mesaje */
+.message-box {
+  background: rgba(0, 0, 0, 0.6);
+  border-left: 4px solid;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.message-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.1) 0%,
+    rgba(255, 215, 0, 0.1) 100%
+  );
+  opacity: 0.3;
+  border-radius: 8px;
+}
+
+.message-box p {
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.5;
+  font-family: "Playfair Display", serif;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.message-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stiluri specifice pentru fiecare mesaj */
+.message-1 {
+  border-color: #ff0000;
+}
+
+.message-2 {
+  border-color: #ff6b6b;
+  align-self: flex-end;
+}
+
+.message-3 {
+  border-color: #ffd700;
+}
+
+/* Stiluri pentru mesajul final */
+.final-message {
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.final-message.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.final-message h2 {
+  font-size: 2rem;
+  color: #ffd700;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.final-message p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+/* Stiluri pentru inputul de nume */
+.name-input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+  margin-top: 1rem;
+}
+
+.name-input-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.name-input {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 1rem;
+  font-size: 1.2rem;
+  color: white;
+  transition: all 0.3s ease;
+  border-radius: 8px 8px 0 0;
+}
+
+.name-input:focus {
+  outline: none;
+  border-bottom-color: #ffd700;
+}
+
+.input-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, #ff0000, #ffd700);
+  transition: width 0.3s ease;
+}
+
+.name-input:focus + .input-highlight {
+  width: 100%;
+}
+
+.name-error {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Butonul de continuare */
+.continue-button {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 20, 147, 0.7),
+    rgba(255, 105, 180, 0.7)
+  );
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.continue-button.enabled {
+  cursor: pointer;
+  opacity: 1;
+  background: linear-gradient(45deg, #ff1493, #ff69b4);
+}
+
+.continue-button.enabled:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(255, 20, 147, 0.5);
+}
+
+/* Animații */
+@keyframes pulseBackground {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(5%, 5%);
+  }
+  50% {
+    transform: translate(0, 10%);
+  }
+  75% {
+    transform: translate(-5%, 5%);
+  }
+}
+
+/* Media queries pentru responsivitate */
+@media (max-width: 768px) {
+  .message-box p {
+    font-size: 1.2rem;
+  }
+
+  .final-message h2 {
+    font-size: 1.7rem;
+  }
+
+  .final-message p {
+    font-size: 1.1rem;
+  }
+
+  .continue-button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .message-box {
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .message-box p {
+    font-size: 1.1rem;
+  }
+
+  .final-message h2 {
+    font-size: 1.5rem;
+  }
+
+  .final-message p {
+    font-size: 1rem;
+  }
+
+  .name-input {
+    padding: 0.8rem;
+    font-size: 1.1rem;
+  }
+
+  .continue-button {
+    padding: 0.7rem 1.8rem;
+    font-size: 0.9rem;
+  }
+}

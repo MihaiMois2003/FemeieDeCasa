@@ -1,0 +1,259 @@
+/* Stiluri pentru statistici */
+.statistics-container {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+  margin-bottom: 30px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.statistics-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.statistics-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffd700;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.statistic-item {
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.statistic-item:hover {
+  transform: translateY(-3px);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.statistic-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 5px;
+}
+
+.statistic-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+} /* Stiluri pentru ecranul de rezultate */
+.result-screen {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: white;
+  overflow: hidden;
+}
+
+/* Fundal cu gradient */
+.result-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #300606, #1a0303);
+  z-index: -1;
+}
+
+/* Containerul principal al rezultatelor */
+.result-container {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  padding: 40px 30px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+/* Titlul principal */
+.result-title {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #ffd700;
+  font-weight: 600;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Containerul cercului de scor */
+.score-circle-container {
+  margin: 0 auto 40px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.score-circle-container.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Cercul de scor */
+.score-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Valoarea scorului */
+.score-value {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+/* Clase pentru diferite niveluri de scor */
+.score-circle.excellent {
+  background: linear-gradient(135deg, #ffd700, #ff6b6b);
+  border: 5px solid #ffd700;
+  color: #1a0303;
+}
+
+.score-circle.good {
+  background: linear-gradient(135deg, #ffa500, #ff6b6b);
+  border: 5px solid #ffa500;
+  color: #1a0303;
+}
+
+.score-circle.average {
+  background: linear-gradient(135deg, #ff6b6b, #ff4136);
+  border: 5px solid #ff6b6b;
+  color: white;
+}
+
+.score-circle.poor {
+  background: linear-gradient(135deg, #ff4136, #85144b);
+  border: 5px solid #ff4136;
+  color: white;
+}
+
+/* Containerul de feedback */
+.feedback-container {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+  margin-bottom: 40px;
+}
+
+.feedback-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Titlul de feedback */
+.feedback-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #ffd700;
+}
+
+/* Mesajul de feedback */
+.feedback-message {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Containerul butoanelor de acțiune */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.action-buttons.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stiluri pentru butoane */
+.restart-button,
+.share-button {
+  padding: 15px 0;
+  border-radius: 50px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.restart-button {
+  background: linear-gradient(45deg, #ff0000, #ff6b6b);
+  color: white;
+}
+
+.restart-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+}
+
+.share-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid #ffd700;
+}
+
+.share-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+}
+
+/* Adaptări pentru dispozitive mobile */
+@media (max-width: 600px) {
+  .result-container {
+    padding: 30px 20px;
+  }
+
+  .result-title {
+    font-size: 1.7rem;
+  }
+
+  .score-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  .score-value {
+    font-size: 2.5rem;
+  }
+
+  .feedback-title {
+    font-size: 1.3rem;
+  }
+
+  .feedback-message {
+    font-size: 1rem;
+  }
+}
