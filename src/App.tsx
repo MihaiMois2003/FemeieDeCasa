@@ -14,6 +14,17 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState<ScreenType>("WELCOME");
   const [score, setScore] = useState<number>(0);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  // Verificăm dacă background-ul s-a încărcat
+  useEffect(() => {
+    // Simulăm încărcarea (în realitate, ar trebui să verificăm imaginea)
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Verifică dacă există o parolă admin în localStorage
   useEffect(() => {
@@ -106,8 +117,14 @@ function App() {
     }
   };
 
+  // Aplicăm o clasă pentru a afișa conținutul doar după ce background-ul s-a încărcat
+  const appClasses = `app ${isLoaded ? "loaded" : ""}`;
+
   return (
-    <div className="app">
+    <div className={appClasses}>
+      {/* Common background for all screens except admin */}
+      {currentScreen !== "ADMIN" && <div className="app-background"></div>}
+
       {isAdmin && currentScreen !== "ADMIN" && (
         <button
           className="admin-button"
@@ -116,6 +133,7 @@ function App() {
           Admin
         </button>
       )}
+
       {renderScreen()}
     </div>
   );

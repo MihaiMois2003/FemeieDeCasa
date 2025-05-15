@@ -16,31 +16,31 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onContinue }) => {
   const [buttonEnabled, setButtonEnabled] = useState(false);
 
   useEffect(() => {
-    // Secvența animațiilor pentru mesaje
+    // Secvența animațiilor pentru mesaje - cu timpi ajustați pentru o experiență mai bună pe mobil
     setTimeout(() => {
       console.log("Mesajul 1 devine vizibil");
       setMessage1Visible(true);
-    }, 800);
+    }, 600);
 
     setTimeout(() => {
       console.log("Mesajul 2 devine vizibil");
       setMessage2Visible(true);
-    }, 2500);
+    }, 1800);
 
     setTimeout(() => {
       console.log("Mesajul 3 devine vizibil");
       setMessage3Visible(true);
-    }, 4200);
+    }, 3000);
 
     setTimeout(() => {
       console.log("Mesajul final devine vizibil");
       setFinalMessageVisible(true);
-    }, 5900);
+    }, 4200);
 
     setTimeout(() => {
       console.log("Input pentru nume devine vizibil");
       setNameInputVisible(true);
-    }, 7000);
+    }, 5400);
   }, []);
 
   // Validarea numelui și activarea butonului
@@ -65,10 +65,8 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onContinue }) => {
 
   return (
     <div className="intro-screen">
-      <div className="intro-background"></div>
-
       <div className="intro-content">
-        {/* Mesajele animaționale */}
+        {/* Mesajele animaționale - cu clase ajustate pentru mobile */}
         <div
           className={`message-box message-1 ${
             message1Visible ? "visible" : ""
@@ -103,7 +101,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onContinue }) => {
           </p>
         </div>
 
-        {/* Input pentru nume */}
+        {/* Input pentru nume - cu layout optimizat pentru mobile */}
         <div
           className={`name-input-container ${
             nameInputVisible ? "visible" : ""
@@ -116,6 +114,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onContinue }) => {
               onChange={(e) => setUserName(e.target.value)}
               placeholder="Numele tău..."
               className="name-input"
+              autoComplete="off"
             />
             <div className="input-highlight"></div>
           </div>

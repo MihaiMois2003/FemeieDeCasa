@@ -124,7 +124,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
 
   return (
     <div className="result-screen">
-      <div className="result-background"></div>
+      {/* Removed result-background div since background is in App.tsx */}
 
       <div className="result-container">
         <h1 className="result-title">Rezultatul tău</h1>

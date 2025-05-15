@@ -1,97 +1,34 @@
-/* Stiluri pentru statistici */
-.statistics-container {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-  margin-bottom: 30px;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
-  padding: 20px;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-}
+/* Stiluri optimizate pentru mobile pentru ResultScreen */
 
-.statistics-container.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.statistics-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #ffd700;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.statistics-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
-.statistic-item {
-  text-align: center;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.statistic-item:hover {
-  transform: translateY(-3px);
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-.statistic-value {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ffd700;
-  margin-bottom: 5px;
-}
-
-.statistic-label {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-} /* Stiluri pentru ecranul de rezultate */
+/* Stiluri pentru ecranul de rezultate */
 .result-screen {
   min-height: 100vh;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
   color: white;
   overflow: hidden;
 }
 
-/* Fundal cu gradient */
-.result-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #300606, #1a0303);
-  z-index: -1;
-}
-
 /* Containerul principal al rezultatelor */
 .result-container {
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 20px;
-  padding: 40px 30px;
-  max-width: 500px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 25px 20px;
   width: 100%;
+  max-width: 450px;
   text-align: center;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1;
 }
 
 /* Titlul principal */
 .result-title {
-  font-size: 2rem;
-  margin-bottom: 30px;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
   color: #ffd700;
   font-weight: 600;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
@@ -99,10 +36,10 @@
 
 /* Containerul cercului de scor */
 .score-circle-container {
-  margin: 0 auto 40px;
+  margin: 0 auto 30px;
   opacity: 0;
   transform: scale(0.5);
-  transition: opacity 1s ease, transform 1s ease;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .score-circle-container.visible {
@@ -112,20 +49,20 @@
 
 /* Cercul de scor */
 .score-circle {
-  width: 180px;
-  height: 180px;
+  width: 150px; /* Dimensiune redusă pentru mobil */
+  height: 150px; /* Dimensiune redusă pentru mobil */
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
   position: relative;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Valoarea scorului */
 .score-value {
-  font-size: 3rem;
+  font-size: 2.5rem; /* Dimensiune redusă pentru mobil */
   font-weight: bold;
 }
 
@@ -158,8 +95,8 @@
 .feedback-container {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-  margin-bottom: 40px;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  margin-bottom: 25px;
 }
 
 .feedback-container.visible {
@@ -169,27 +106,78 @@
 
 /* Titlul de feedback */
 .feedback-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem; /* Dimensiune redusă pentru mobil */
   font-weight: 600;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   color: #ffd700;
 }
 
 /* Mesajul de feedback */
 .feedback-message {
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1rem; /* Dimensiune redusă pentru mobil */
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.9);
+}
+
+/* Stiluri pentru statistici */
+.statistics-container {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  margin-bottom: 25px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.statistics-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.statistics-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffd700;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.statistic-item {
+  text-align: center;
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.statistic-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 5px;
+}
+
+.statistic-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* Containerul butoanelor de acțiune */
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .action-buttons.visible {
@@ -200,13 +188,14 @@
 /* Stiluri pentru butoane */
 .restart-button,
 .share-button {
-  padding: 15px 0;
-  border-radius: 50px;
+  padding: 12px 0;
+  border-radius: 30px;
   border: none;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .restart-button {
@@ -214,46 +203,99 @@
   color: white;
 }
 
-.restart-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
-}
-
 .share-button {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   color: white;
   border: 2px solid #ffd700;
 }
 
-.share-button:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-3px);
+/* Efect hover pentru dispozitive care suportă */
+@media (hover: hover) {
+  .restart-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+  }
+
+  .share-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+  }
+
+  .statistic-item:hover {
+    transform: translateY(-3px);
+    background-color: rgba(255, 255, 255, 0.15);
+  }
 }
 
-/* Adaptări pentru dispozitive mobile */
-@media (max-width: 600px) {
+/* Adaptări pentru dispozitive mobile mai mari */
+@media (min-width: 480px) {
   .result-container {
-    padding: 30px 20px;
+    padding: 30px 25px;
   }
 
   .result-title {
-    font-size: 1.7rem;
+    font-size: 2rem;
   }
 
   .score-circle {
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
   }
 
   .score-value {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
 
   .feedback-title {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
 
   .feedback-message {
-    font-size: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .statistics-title {
+    font-size: 1.3rem;
+  }
+
+  .statistic-value {
+    font-size: 1.4rem;
+  }
+
+  .statistic-label {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .result-container {
+    padding: 35px 30px;
+    max-width: 500px;
+  }
+
+  .score-circle {
+    width: 180px;
+    height: 180px;
+  }
+
+  .statistics-container {
+    padding: 20px;
+  }
+
+  .action-buttons {
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .restart-button,
+  .share-button {
+    max-width: 200px;
+    padding: 15px 0;
+    font-size: 1.1rem;
+  }
+
+  .feedback-message {
+    font-size: 1.15rem;
   }
 }

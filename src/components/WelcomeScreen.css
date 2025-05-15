@@ -1,4 +1,4 @@
-/* Stilurile pentru Welcome Screen */
+/* Stilurile pentru Welcome Screen optimizate pentru mobil */
 .welcome-screen {
   position: relative;
   height: 100vh;
@@ -11,40 +11,28 @@
   text-align: center;
 }
 
-/* Imaginea de fundal cu efect de estompare */
-.background-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("../assets/images/BuchetTrandafiri.jpg"); /* Calea către imagine */
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.5); /* Întunecă imaginea pentru contrast mai bun */
-  z-index: -1;
-}
-
 /* Stiluri pentru conținutul principal */
 .content {
-  padding: 2rem;
+  padding: 20px;
   z-index: 1;
-  max-width: 90%;
+  width: 100%;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -50px; /* Mută conținutul mai sus */
 }
 
 /* Titlul cu animație de intrare */
 .title {
-  font-size: 2.5rem;
+  font-size: 1.8rem; /* Dimensiune redusă pentru mobil */
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s ease, transform 1s ease;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  padding: 0 10px;
 }
 
 .title.visible {
@@ -61,13 +49,13 @@
 
 /* Containerul pentru imagine */
 .image-container {
-  margin: 1.5rem 0 2.5rem 0;
+  margin: 1.2rem 0 2rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   opacity: 0;
   transform: scale(0.6);
-  transition: opacity 1.2s ease, transform 1.2s ease;
+  transition: opacity 1s ease, transform 1s ease;
 }
 
 .image-container.visible {
@@ -78,16 +66,16 @@
 /* Wrapper pentru imaginea circulară cu efecte */
 .circle-image-wrapper {
   position: relative;
-  width: 220px;
-  height: 220px;
-  margin-bottom: 1rem;
+  width: 180px; /* Dimensiune redusă pentru mobil */
+  height: 180px; /* Dimensiune redusă pentru mobil */
+  margin-bottom: 0.8rem;
   animation: float 6s ease-in-out infinite;
 }
 
 /* Imaginea profilului */
 .profile-image {
-  width: 200px;
-  height: 200px;
+  width: 160px; /* Dimensiune redusă pentru mobil */
+  height: 160px; /* Dimensiune redusă pentru mobil */
   border-radius: 50%;
   background-image: url("../assets/images/MihaiMoiseBoss.jpg");
   background-size: cover;
@@ -95,7 +83,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 
@@ -116,7 +104,7 @@
 
 /* Textul de sub imagine */
 .image-caption {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #ffd700;
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -125,17 +113,18 @@
 
 /* Butonul cu animație de intrare */
 .start-button {
+  width: 100%;
+  max-width: 250px;
   background: linear-gradient(45deg, #ff1493, #ff69b4); /* Gradient de roz */
   color: white;
   border: none;
-  padding: 1rem 2.5rem;
-  font-size: 1.2rem;
+  padding: 0.9rem 0;
+  font-size: 1.1rem;
   border-radius: 30px;
   cursor: pointer;
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s ease, transform 1s ease, background 0.3s ease,
-    transform 0.3s ease;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease, background 0.3s ease;
   box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
   font-weight: bold;
   letter-spacing: 1px;
@@ -148,7 +137,7 @@
 
 .start-button:hover {
   background: linear-gradient(45deg, #ff69b4, #ff1493);
-  transform: translateY(-5px) scale(1.05);
+  transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(255, 20, 147, 0.6);
 }
 
@@ -162,7 +151,7 @@
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-15px) rotate(3deg);
+    transform: translateY(-10px) rotate(2deg);
   }
   100% {
     transform: translateY(0px) rotate(0deg);
@@ -190,49 +179,45 @@
   }
 }
 
-/* Media query pentru ecrane mai mici */
-@media (max-width: 768px) {
+/* Media query pentru ecrane mai mari */
+@media (min-width: 480px) {
   .title {
     font-size: 2rem;
   }
 
   .circle-image-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .profile-image {
     width: 180px;
     height: 180px;
   }
 
-  .profile-image {
-    width: 160px;
-    height: 160px;
-  }
-
-  .start-button {
-    padding: 0.8rem 2rem;
-    font-size: 1.1rem;
+  .image-caption {
+    font-size: 1.2rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 768px) {
   .title {
-    font-size: 1.8rem;
+    font-size: 2.3rem;
+    margin-bottom: 2rem;
   }
 
   .circle-image-wrapper {
-    width: 150px;
-    height: 150px;
+    width: 220px;
+    height: 220px;
   }
 
   .profile-image {
-    width: 130px;
-    height: 130px;
+    width: 200px;
+    height: 200px;
   }
 
   .start-button {
-    padding: 0.7rem 1.8rem;
-    font-size: 1rem;
-  }
-
-  .image-caption {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    padding: 1rem 0;
   }
 }
