@@ -146,8 +146,16 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
       `Calculare scor: ${score}/${maxPossibleScore} = ${percentage}%`
     );
 
-    // Trimitem scorul înapoi prin callback
-    onFinish(percentage);
+    // Adăugăm o secvență try-catch pentru a detecta eventuale erori
+    try {
+      // Trimitem scorul înapoi prin callback
+      onFinish(percentage);
+    } catch (error) {
+      console.error("Eroare la finalizarea quiz-ului:", error);
+      alert(
+        "A apărut o eroare la calcularea scorului. Te rugăm să încerci din nou."
+      );
+    }
   };
 
   // Verificăm dacă întrebarea curentă are un răspuns selectat

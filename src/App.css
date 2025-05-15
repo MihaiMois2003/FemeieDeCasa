@@ -18,6 +18,26 @@ body {
   position: relative;
 }
 
+/* Butonul de admin */
+.admin-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  z-index: 1000;
+  transition: background-color 0.2s;
+}
+
+.admin-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 /* Animații globale */
 @keyframes fadeIn {
   from {

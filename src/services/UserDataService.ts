@@ -1,3 +1,13 @@
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "../firebase/config";
+
 // Definirea tipurilor pentru datele utilizatorului și răspunsuri
 export interface UserAnswer {
   questionId: number;
@@ -14,11 +24,10 @@ export interface UserData {
 
 // Clasa care gestionează datele utilizatorilor
 class UserDataService {
-  private userData: UserData[] = [];
   private currentUser: UserData | null = null;
 
   // Creează un nou utilizator cu numele dat
-  createUser(name: string): string {
+  async createUser(name: string): Promise<string> {
     const userId = this.generateUserId();
 
     this.currentUser = {
@@ -60,7 +69,7 @@ class UserDataService {
   }
 
   // Finalizează testul și calculează scorul
-  finishQuiz(score: number): void {
+  async finishQuiz(score: number): Promise<void> {
     if (!this.currentUser) {
       console.error("Nu există niciun utilizator curent!");
       return;
@@ -68,13 +77,24 @@ class UserDataService {
 
     this.currentUser.score = score;
 
-    // Adaugă utilizatorul în lista de date
-    this.userData.push({ ...this.currentUser });
+    try {
+      // Salvează datele utilizatorului în Firestore
+      const userDocRef = await addDoc(collection(db, "users"), {
+        name: this.currentUser.name,
+        score: this.currentUser.score,
+        answers: this.currentUser.answers,
+        timestamp: Timestamp.fromDate(this.currentUser.timestamp),
+      });
 
-    console.log(
-      `Test finalizat pentru ${this.currentUser.name} cu scorul ${score}%`
-    );
-    console.log("Date utilizator salvate:", this.currentUser);
+      console.log(
+        `Test finalizat pentru ${this.currentUser.name} cu scorul ${score}%`
+      );
+      console.log("Date utilizator salvate în Firebase cu ID:", userDocRef.id);
+      return Promise.resolve();
+    } catch (error) {
+      console.error("Eroare la salvarea datelor în Firebase:", error);
+      return Promise.reject(error);
+    }
   }
 
   // Obține datele utilizatorului curent
@@ -82,9 +102,33 @@ class UserDataService {
     return this.currentUser;
   }
 
-  // Obține toate datele utilizatorilor
-  getAllUserData(): UserData[] {
-    return this.userData;
+  // Obține toate datele utilizatorilor din Firestore
+  async getAllUserData(): Promise<UserData[]> {
+    try {
+      const usersQuery = query(
+        collection(db, "users"),
+        orderBy("timestamp", "desc")
+      );
+      const querySnapshot = await getDocs(usersQuery);
+
+      const userData: UserData[] = [];
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        userData.push({
+          userId: doc.id,
+          name: data.name,
+          score: data.score,
+          answers: data.answers,
+          timestamp: data.timestamp.toDate(),
+        });
+      });
+
+      return userData;
+    } catch (error) {
+      console.error("Eroare la obținerea datelor din Firebase:", error);
+      return [];
+    }
   }
 
   // Generează un ID unic pentru utilizator

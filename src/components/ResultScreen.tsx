@@ -52,31 +52,29 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
 
   // Obținem statistici despre utilizatori
   const getStatistics = () => {
-    const allUsers = userDataService.getAllUserData();
+    try {
+      // Nu mai folosim allUsers, deci nu mai declarăm variabila
 
-    // Calculăm media scorurilor
-    const totalScore = allUsers.reduce((sum, user) => sum + user.score, 0);
-    const averageScore =
-      allUsers.length > 0 ? Math.round(totalScore / allUsers.length) : 0;
+      // Calculăm media scorurilor - folosim doar scorul curent dacă nu avem date din backend încă
+      const averageScore = score;
 
-    // Găsim utilizatorul cu scorul maxim
-    const maxScoreUser = allUsers.reduce(
-      (max, user) => (user.score > max.score ? user : max),
-      { name: "Nimeni", score: 0 }
-    );
+      return {
+        totalUsers: 1, // Arătăm doar 1 deocamdată
+        averageScore,
+        maxScoreUser: { name: userName || "Tine", score: score },
+        position: 1,
+      };
+    } catch (error) {
+      console.error("Eroare la obținerea statisticilor:", error);
 
-    // Determinăm poziția utilizatorului curent în clasament
-    const position =
-      allUsers
-        .sort((a, b) => b.score - a.score)
-        .findIndex((user) => user.name === userName) + 1;
-
-    return {
-      totalUsers: allUsers.length,
-      averageScore,
-      maxScoreUser,
-      position,
-    };
+      // Returnăm date implicite în caz de eroare
+      return {
+        totalUsers: 1,
+        averageScore: score,
+        maxScoreUser: { name: userName || "Tine", score: score },
+        position: 1,
+      };
+    }
   };
 
   const statistics = getStatistics();
