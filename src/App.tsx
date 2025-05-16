@@ -6,6 +6,8 @@ import ResultScreen from "./components/ResultScreen";
 import AdminScreen from "./components/AdminScreen";
 import { userDataService } from "./services/UserDataService";
 import "./App.css";
+// Import background image directly (this helps with Netlify builds)
+import backgroundImage from "./assets/images/BuchetTrandafiri.jpg";
 
 // Definirea stărilor aplicației
 type ScreenType = "WELCOME" | "INTRO" | "QUIZ" | "RESULT" | "ADMIN";
@@ -123,7 +125,14 @@ function App() {
   return (
     <div className={appClasses}>
       {/* Common background for all screens except admin */}
-      {currentScreen !== "ADMIN" && <div className="app-background"></div>}
+      {currentScreen !== "ADMIN" && (
+        <div className="app-background">
+          <div
+            className="app-background-image"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          ></div>
+        </div>
+      )}
 
       {isAdmin && currentScreen !== "ADMIN" && (
         <button

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./WelcomeScreen.css";
+// Import the profile image directly
+import profileImage from "../assets/images/MihaiMoiseBoss.jpg";
 
-// Componentă pentru primul screen - Pagina de bun venit (optimizată pentru mobil)
+// Componentă pentru primul screen - Pagina de bun venit (optimizată pentru Netlify)
 const WelcomeScreen: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   const [titleVisible, setTitleVisible] = useState(false);
   const [imageVisible, setImageVisible] = useState(false);
@@ -46,7 +48,11 @@ const WelcomeScreen: React.FC<{ onStart: () => void }> = ({ onStart }) => {
         <div className={`image-container ${imageVisible ? "visible" : ""}`}>
           <div className="circle-image-wrapper">
             <div className="image-effects"></div>
-            <div className="profile-image"></div>
+            {/* Use the imported image instead of background-image in CSS */}
+            <div
+              className="profile-image"
+              style={{ backgroundImage: `url(${profileImage})` }}
+            ></div>
           </div>
           <div className="image-caption">Talentul României</div>
         </div>

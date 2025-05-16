@@ -1,4 +1,4 @@
-/* Stilurile pentru Welcome Screen optimizate pentru mobil */
+/* Stilurile pentru Welcome Screen optimizate pentru mobil și Netlify */
 .welcome-screen {
   position: relative;
   height: 100vh;
@@ -72,12 +72,11 @@
   animation: float 6s ease-in-out infinite;
 }
 
-/* Imaginea profilului */
+/* Imaginea profilului - styles updated for Netlify compatibility */
 .profile-image {
   width: 160px; /* Dimensiune redusă pentru mobil */
   height: 160px; /* Dimensiune redusă pentru mobil */
   border-radius: 50%;
-  background-image: url("../assets/images/MihaiMoiseBoss.jpg");
   background-size: cover;
   background-position: center;
   position: absolute;
