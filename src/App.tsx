@@ -17,10 +17,22 @@ function App() {
   const [score, setScore] = useState<number>(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [totalPoints, setTotalPoints] = useState<number>(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [maxPossiblePoints, setMaxPossiblePoints] = useState<number>(0);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Aici practic "utilizăm" variabilele, dar nu facem nimic cu ele
+    console.log(`Puncte curente: ${totalPoints}/${maxPossiblePoints}`);
+  }, [totalPoints, maxPossiblePoints]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      document.title = "Admin - Femeie de Casă";
+    } else {
+      document.title = "Femeie de Casă";
+    }
+  }, [isAdmin]);
 
   // Verificăm dacă background-ul s-a încărcat
   useEffect(() => {

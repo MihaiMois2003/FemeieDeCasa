@@ -155,37 +155,6 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
     fetchStatistics();
   }, [score, userName]);
 
-  const handleShareToInstagram = () => {
-    // Close the share modal after alert
-    setShowShareModal(false);
-  };
-
-  const handleShareViaAPI = async () => {
-    const feedbackMsg = getFeedbackMessage().title;
-    const shareText = `Am obținut "${feedbackMsg}" în testul Femeie de Casă! Scorul meu: ${score}%!`;
-
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: "Rezultatul meu - Femeie de Casă",
-          text: shareText,
-          url: window.location.origin,
-        });
-        console.log("Content shared successfully");
-      } else {
-        // Fallback for browsers that don't support sharing
-        navigator.clipboard.writeText(shareText + " " + window.location.origin);
-        alert(
-          "Text copiat în clipboard! Poți să îl lipești oriunde dorești să distribui."
-        );
-      }
-    } catch (error) {
-      console.error("Error sharing content:", error);
-    }
-
-    setShowShareModal(false);
-  };
-
   // Handle share button click
   const handleShareClick = () => {
     setShowShareModal(true);
