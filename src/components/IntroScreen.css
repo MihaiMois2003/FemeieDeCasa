@@ -10,24 +10,28 @@
   color: white;
 }
 
-/* Conținutul introductiv optimizat pentru mobil */
+/* Conținutul introductiv optimizat pentru mobil - Improved centering */
 .intro-content {
   width: 100%;
   max-width: 550px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Improved vertical centering */
   z-index: 1;
   padding: 15px; /* Padding mai mic pentru mobil */
+  max-height: 95vh; /* Prevent overflow on small screens */
+  margin-left: auto;
+  margin-right: auto; /* Ensure horizontal centering */
 }
 
-/* Stiluri pentru cutiile de mesaje */
+/* Stiluri pentru cutiile de mesaje - Improved alignment */
 .message-box {
   background: rgba(0, 0, 0, 0.6);
   border-left: 4px solid;
   border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
+  padding: 12px; /* Reduced padding */
+  margin-bottom: 12px; /* Reduced margin */
   width: 100%;
   opacity: 0;
   transform: translateY(20px);
@@ -53,7 +57,7 @@
 }
 
 .message-box p {
-  font-size: 1.1rem; /* Dimensiune font ajustată pentru mobil */
+  font-size: 1rem; /* Reduced font size for better fit */
   font-weight: 500;
   line-height: 1.4;
   font-family: "Playfair Display", "Arial", sans-serif;
@@ -66,33 +70,40 @@
   transform: translateY(0);
 }
 
-/* Stiluri specifice pentru fiecare mesaj */
+/* Stiluri specifice pentru fiecare mesaj - Improved positioning */
 .message-1 {
   border-color: #ff0000;
   align-self: flex-start;
   width: 100%;
+  margin-left: 0; /* Reset any margins */
+  margin-right: 0; /* Reset any margins */
 }
 
 .message-2 {
   border-color: #ff6b6b;
   align-self: flex-end;
-  width: 95%;
+  width: 90%; /* Reduced width for better visual */
+  margin-left: auto; /* Push to right */
+  margin-right: 0; /* Reset right margin */
 }
 
 .message-3 {
   border-color: #ffd700;
   align-self: flex-start;
   width: 100%;
+  margin-left: 0; /* Reset any margins */
+  margin-right: 0; /* Reset any margins */
 }
 
-/* Stiluri pentru mesajul final */
+/* Stiluri pentru mesajul final - Center properly */
 .final-message {
   text-align: center;
-  padding: 15px 10px;
-  margin-bottom: 20px;
+  padding: 12px 10px; /* Reduced padding */
+  margin-bottom: 15px; /* Reduced margin */
   opacity: 0;
   transform: scale(0.8);
   transition: opacity 0.8s ease, transform 0.8s ease;
+  width: 100%; /* Full width */
 }
 
 .final-message.visible {
@@ -101,20 +112,22 @@
 }
 
 .final-message h2 {
-  font-size: 1.5rem; /* Dimensiune redusă pentru mobil */
+  font-size: 1.4rem; /* Reduced size */
   color: #ffd700;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reduced margin */
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  text-align: center; /* Ensure centered */
 }
 
 .final-message p {
-  font-size: 1rem; /* Dimensiune redusă pentru mobil */
+  font-size: 0.95rem; /* Reduced size */
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.5;
+  text-align: center; /* Ensure centered */
 }
 
-/* Stiluri pentru inputul de nume */
+/* Stiluri pentru inputul de nume - Improved centering */
 .name-input-container {
   width: 100%;
   display: flex;
@@ -123,7 +136,7 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-top: 10px;
+  margin-top: 8px; /* Reduced margin */
 }
 
 .name-input-container.visible {
@@ -134,7 +147,8 @@
 .input-wrapper {
   position: relative;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 12px; /* Reduced margin */
+  max-width: 100%; /* Prevent overflow */
 }
 
 .name-input {
@@ -142,8 +156,8 @@
   background-color: rgba(0, 0, 0, 0.5);
   border: none;
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 12px;
-  font-size: 1.1rem;
+  padding: 10px; /* Reduced padding */
+  font-size: 1rem; /* Adjusted size */
   color: white;
   transition: all 0.3s ease;
   border-radius: 8px 8px 0 0;
@@ -171,13 +185,15 @@
 .name-error {
   color: #ff6b6b;
   font-size: 0.9rem;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reduced margin */
   text-align: center;
+  width: 100%; /* Full width */
 }
 
-/* Butonul de continuare */
+/* Butonul de continuare - Improved centering */
 .continue-button {
   width: 100%;
+  max-width: 240px; /* Limited max width */
   padding: 12px 0;
   background: linear-gradient(
     45deg,
@@ -187,7 +203,7 @@
   color: white;
   border: none;
   border-radius: 50px;
-  font-size: 1.1rem;
+  font-size: 1rem; /* Adjusted size */
   cursor: not-allowed;
   opacity: 0.6;
   transition: all 0.3s ease;
@@ -195,6 +211,9 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* Ensure horizontal centering */
 }
 
 .continue-button.enabled {
@@ -210,6 +229,32 @@
 
 .continue-button:active {
   transform: translateY(1px);
+}
+
+/* Media queries for taller screens - add spacing when possible */
+@media (min-height: 700px) {
+  .message-box {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .message-box p {
+    font-size: 1.1rem;
+  }
+
+  .final-message {
+    padding: 15px 10px;
+    margin-bottom: 18px;
+  }
+
+  .final-message h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .final-message p {
+    font-size: 1rem;
+  }
 }
 
 /* Media queries pentru responsivitate */
@@ -239,7 +284,7 @@
 
   .message-box {
     padding: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   .message-box p {
@@ -260,5 +305,6 @@
 
   .continue-button {
     max-width: 300px;
+    font-size: 1.1rem;
   }
 }

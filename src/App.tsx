@@ -15,18 +15,31 @@ type ScreenType = "WELCOME" | "INTRO" | "QUIZ" | "RESULT" | "ADMIN";
 function App() {
   const [currentScreen, setCurrentScreen] = useState<ScreenType>("WELCOME");
   const [score, setScore] = useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [totalPoints, setTotalPoints] = useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [maxPossiblePoints, setMaxPossiblePoints] = useState<number>(0);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   // Verificăm dacă background-ul s-a încărcat
   useEffect(() => {
-    // Simulăm încărcarea (în realitate, ar trebui să verificăm imaginea)
-    const timer = setTimeout(() => {
+    const img = new Image();
+    img.src = backgroundImage;
+    img.onload = () => {
       setIsLoaded(true);
-    }, 300);
+    };
+
+    // Fallback timer in case image loading fails
+    const timer = setTimeout(() => {
+      if (!isLoaded) {
+        console.log("Folosim timer-ul de rezervă pentru încărcare");
+        setIsLoaded(true);
+      }
+    }, 500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isLoaded]);
 
   // Verifică dacă există o parolă admin în localStorage
   useEffect(() => {
@@ -39,7 +52,7 @@ function App() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.altKey && event.key === "a") {
         const password = prompt("Introduceți parola de administrator:");
-        if (password === "admin123") {
+        if (password === "SotoMitzy69") {
           // Parola simplă pentru exemplificare
           localStorage.setItem("adminPassword", "true");
           setIsAdmin(true);
@@ -54,6 +67,13 @@ function App() {
     };
   }, []);
 
+  // Funcție pentru a accesa direct ecranul de admin
+  const handleAdminAccess = () => {
+    console.log("Acces direct la panoul de administrare");
+    setIsAdmin(true);
+    setCurrentScreen("ADMIN");
+  };
+
   // Funcție pentru a naviga la ecranul de introducere
   const handleStartWelcome = () => {
     console.log("Navigare la ecranul de introducere");
@@ -63,19 +83,40 @@ function App() {
   // Funcție pentru a procesa numele utilizatorului și a naviga la quiz
   const handleUserNameSubmit = (userName: string) => {
     console.log(`Nume utilizator introdus: ${userName}`);
-    userDataService.createUser(userName);
-    setCurrentScreen("QUIZ");
+
+    // Verificăm dacă numele este numele secret pentru admin
+    if (userName === "SotoMitzy69") {
+      localStorage.setItem("adminPassword", "true");
+      setIsAdmin(true);
+      setCurrentScreen("ADMIN");
+    } else {
+      userDataService.createUser(userName);
+      setCurrentScreen("QUIZ");
+    }
   };
 
   // Funcție pentru a naviga la ecranul de rezultate
-  const handleFinishQuiz = async (quizScore: number) => {
-    console.log(`Quiz finalizat cu scorul: ${quizScore}%`);
+
+  // Update handleFinishQuiz function in App.tsx to use the declared variables
+  // Funcție pentru a naviga la ecranul de rezultate
+  const handleFinishQuiz = async (
+    percentage: number,
+    points: number,
+    maxPoints: number
+  ) => {
+    console.log(
+      `Quiz finalizat cu scorul: ${percentage}% (${points}/${maxPoints} puncte)`
+    );
 
     try {
-      setScore(quizScore);
-      // Salvăm datele în Firebase
-      await userDataService.finishQuiz(quizScore);
+      setScore(percentage);
+      setTotalPoints(points);
+      setMaxPossiblePoints(maxPoints);
+
+      // Salvăm datele în Firebase inclusiv punctele
+      await userDataService.finishQuiz(percentage, points, maxPoints);
       console.log("Date salvate cu succes în Firebase");
+
       // Trecem la ecranul de rezultate
       setCurrentScreen("RESULT");
     } catch (error) {
@@ -107,7 +148,12 @@ function App() {
       case "WELCOME":
         return <WelcomeScreen onStart={handleStartWelcome} />;
       case "INTRO":
-        return <IntroScreen onContinue={handleUserNameSubmit} />;
+        return (
+          <IntroScreen
+            onContinue={handleUserNameSubmit}
+            onAdminAccess={handleAdminAccess}
+          />
+        );
       case "QUIZ":
         return <QuizScreen onFinish={handleFinishQuiz} />;
       case "RESULT":
@@ -123,27 +169,29 @@ function App() {
   const appClasses = `app ${isLoaded ? "loaded" : ""}`;
 
   return (
-    <div className={appClasses}>
-      {/* Common background for all screens except admin */}
-      {currentScreen !== "ADMIN" && (
-        <div className="app-background">
-          <div
-            className="app-background-image"
-            style={{ backgroundImage: `url(${backgroundImage})` }}
-          ></div>
-        </div>
-      )}
+    <div className="app-container">
+      <div className={appClasses}>
+        {/* Common background for all screens except admin - Updated for better visibility */}
+        {currentScreen !== "ADMIN" && (
+          <div className="app-background">
+            <div
+              className="app-background-image"
+              style={{ backgroundImage: `url(${backgroundImage})` }}
+            ></div>
+          </div>
+        )}
 
-      {isAdmin && currentScreen !== "ADMIN" && (
-        <button
-          className="admin-button"
-          onClick={() => setCurrentScreen("ADMIN")}
-        >
-          Admin
-        </button>
-      )}
+        {/* {isAdmin && currentScreen !== "ADMIN" && (
+          <button
+            className="admin-button"
+            onClick={() => setCurrentScreen("ADMIN")}
+          >
+            Admin
+          </button>
+        )} */}
 
-      {renderScreen()}
+        <div className="screen-wrapper">{renderScreen()}</div>
+      </div>
     </div>
   );
 }

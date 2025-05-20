@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { userDataService } from "../services/UserDataService";
 import "./QuizScreen.css";
 
@@ -6,77 +6,251 @@ import "./QuizScreen.css";
 interface Question {
   id: number;
   text: string;
-  options: string[];
+  options: {
+    text: string;
+    points: number;
+  }[];
 }
 
 interface Answer {
   questionId: number;
   selectedOption: string;
+  points: number;
 }
 
 // Props pentru componenta QuizScreen
 interface QuizScreenProps {
-  onFinish: (score: number) => void;
+  onFinish: (score: number, points: number, maxPoints: number) => void;
 }
 
 const QuizScreen = ({ onFinish }: QuizScreenProps) => {
-  // Lista de întrebări pentru quiz
-  const questions: Question[] = [
+  // Lista completă de întrebări pentru quiz
+  const allQuestions: Question[] = [
     {
       id: 1,
       text: "Cât de des gătești acasă?",
-      options: ["Zilnic", "De câteva ori pe săptămână", "Rar", "Niciodată"],
+      options: [
+        { text: "Zilnic", points: 4 },
+        { text: "De câteva ori pe săptămână", points: 3 },
+        { text: "Rar", points: 2 },
+        { text: "Niciodată", points: 1 },
+      ],
     },
     {
       id: 2,
       text: "Ce preferi să faci când ai timp liber?",
       options: [
-        "Să fac curat în casă",
-        "Să mă relaxez uitându-mă la TV",
-        "Să ies în oraș cu prietenii",
-        "Să stau pe telefon/social media",
+        { text: "Să fac curat în casă", points: 4 },
+        { text: "Să mă relaxez uitându-mă la TV", points: 3 },
+        { text: "Să ies în oraș cu prietenii", points: 2 },
+        { text: "Să stau pe telefon/social media", points: 1 },
       ],
     },
     {
       id: 3,
       text: "Cum te simți când casa este dezordonată?",
       options: [
-        "Nu pot să mă relaxez deloc",
-        "Mă deranjează puțin",
-        "Îmi pasă doar când vin musafiri",
-        "Nu mă afectează deloc",
+        { text: "Nu pot să mă relaxez deloc", points: 4 },
+        { text: "Mă deranjează puțin", points: 3 },
+        { text: "Îmi pasă doar când vin musafiri", points: 2 },
+        { text: "Nu mă afectează deloc", points: 1 },
       ],
     },
     {
       id: 4,
       text: "Cât de des faci curățenie generală?",
       options: [
-        "Săptămânal",
-        "Lunar",
-        "Doar când este necesar",
-        "Rar sau niciodată",
+        { text: "Săptămânal", points: 4 },
+        { text: "Lunar", points: 3 },
+        { text: "Doar când este necesar", points: 2 },
+        { text: "Rar sau niciodată", points: 1 },
       ],
     },
     {
       id: 5,
       text: "Ce faci când trebuie să găzduiești musafiri?",
       options: [
-        "Pregătesc totul de la zero cu grijă",
-        "Fac cumpărături și ceva simplu",
-        "Comand mâncare de afară",
-        "Îi trimit la restaurant",
+        { text: "Pregătesc totul de la zero cu grijă", points: 4 },
+        { text: "Fac cumpărături și ceva simplu", points: 3 },
+        { text: "Comand mâncare de afară", points: 2 },
+        { text: "Îi trimit la restaurant", points: 1 },
+      ],
+    },
+    {
+      id: 6,
+      text: "Cât de importantă este pentru tine organizarea locuinței?",
+      options: [
+        {
+          text: "Extrem de importantă, totul trebuie să fie perfect ordonat",
+          points: 4,
+        },
+        {
+          text: "Destul de importantă, prefer să fie lucrurile la locul lor",
+          points: 3,
+        },
+        {
+          text: "Moderat importantă, câtă vreme pot găsi ce-mi trebuie",
+          points: 2,
+        },
+        { text: "Nu prea importantă, pot trăi și în dezordine", points: 1 },
+      ],
+    },
+    {
+      id: 7,
+      text: "Cât de des speli vasele?",
+      options: [
+        { text: "Imediat după fiecare masă", points: 4 },
+        { text: "La finalul zilei", points: 3 },
+        { text: "Când se adună mai multe", points: 2 },
+        { text: "Când nu mai am vase curate", points: 1 },
+      ],
+    },
+    {
+      id: 8,
+      text: "Cum procedezi cu hainele murdare?",
+      options: [
+        { text: "Le spăl imediat cum se adună un coș", points: 4 },
+        {
+          text: "Spăl regulat, o dată sau de două ori pe săptămână",
+          points: 3,
+        },
+        { text: "Spăl când nu mai am haine curate", points: 2 },
+        {
+          text: "De obicei aștept până când nu mai am loc în coșul de rufe",
+          points: 1,
+        },
+      ],
+    },
+    {
+      id: 9,
+      text: "Care este atitudinea ta față de gătit?",
+      options: [
+        {
+          text: "Îmi place să gătesc mâncăruri complexe și să experimentez",
+          points: 4,
+        },
+        { text: "Gătesc regulat rețete simple", points: 3 },
+        { text: "Gătesc doar când trebuie, prefer lucruri simple", points: 2 },
+        { text: "Evit să gătesc ori de câte ori pot", points: 1 },
+      ],
+    },
+    {
+      id: 10,
+      text: "Cum te descurci cu bugetul gospodăriei?",
+      options: [
+        {
+          text: "Planific riguros toate cheltuielile și economisesc",
+          points: 4,
+        },
+        { text: "Țin evidența cheltuielilor importante", points: 3 },
+        { text: "Mă descurc cum pot, fără un plan strict", points: 2 },
+        { text: "Nu mă preocupă prea mult bugetul", points: 1 },
+      ],
+    },
+    {
+      id: 11,
+      text: "Cât de des faci cumpărături pentru casă?",
+      options: [
+        { text: "Planific săptămânal și fac cumpărături organizat", points: 4 },
+        { text: "De câteva ori pe săptămână, după necesități", points: 3 },
+        { text: "Cumpăr când îmi amintesc că lipsește ceva", points: 2 },
+        { text: "De obicei când nu mai am nimic în frigider", points: 1 },
+      ],
+    },
+    {
+      id: 12,
+      text: "Ce faci când se strică ceva prin casă?",
+      options: [
+        {
+          text: "Încerc să repar eu sau chem imediat un specialist",
+          points: 4,
+        },
+        { text: "Programez o reparație cât de curând posibil", points: 3 },
+        { text: "Aștept până devine o problemă serioasă", points: 2 },
+        { text: "Ignor problema cât timp se poate", points: 1 },
+      ],
+    },
+    {
+      id: 13,
+      text: "Cum te raportezi la decorarea casei?",
+      options: [
+        {
+          text: "Îmi place să decorez și să schimb frecvent aspectul locuinței",
+          points: 4,
+        },
+        { text: "Acord atenție detaliilor și aspectului plăcut", points: 3 },
+        { text: "Decorez minimal, doar ce e necesar", points: 2 },
+        { text: "Nu mă interesează prea mult aspectul estetic", points: 1 },
+      ],
+    },
+    {
+      id: 14,
+      text: "Cum te descurci cu plantele din casă?",
+      options: [
+        { text: "Am multe plante și le îngrijesc cu atenție", points: 4 },
+        { text: "Am câteva plante pe care le îngrijesc decent", points: 3 },
+        { text: "Am plante care necesită puțină îngrijire", points: 2 },
+        { text: "Evit să am plante pentru că nu le pot îngriji", points: 1 },
+      ],
+    },
+    {
+      id: 15,
+      text: "Cât de des schimbi așternuturile de pat?",
+      options: [
+        { text: "Săptămânal, fără excepție", points: 4 },
+        { text: "La 1-2 săptămâni", points: 3 },
+        { text: "La 3-4 săptămâni", points: 2 },
+        { text: "Când îmi amintesc sau când par murdare", points: 1 },
       ],
     },
   ];
+
+  // State pentru întrebările alese aleatoriu pentru acest quiz
+  const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
 
   // State pentru a ține evidența răspunsurilor și a întrebării curente
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [quizReady, setQuizReady] = useState(false);
+
+  // Numărul de întrebări care vor fi afișate în quiz
+  const NUM_QUESTIONS_IN_QUIZ = 10;
+
+  // Selectarea aleatorie a întrebărilor la încărcarea componentei
+  useEffect(() => {
+    // Funcție pentru a amesteca un array (algoritmul Fisher-Yates)
+    const shuffleArray = (array: any[]) => {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    };
+
+    // Selectăm întrebările aleatoriu
+    const shuffledQuestions = shuffleArray(allQuestions);
+    const selectedQuestions = shuffledQuestions.slice(0, NUM_QUESTIONS_IN_QUIZ);
+
+    // IMPORTANT: Nu mai reindexăm întrebările - păstrăm ID-urile originale
+    setQuizQuestions(selectedQuestions);
+
+    // Store the selected question IDs in the userDataService
+    const selectedQuestionIds = selectedQuestions.map((q) => q.id);
+    userDataService.setQuestionsSelected(selectedQuestionIds);
+
+    setQuizReady(true);
+
+    console.log(
+      `S-au selectat aleatoriu ${NUM_QUESTIONS_IN_QUIZ} întrebări din totalul de ${allQuestions.length}`
+    );
+    console.log("Selected question IDs:", selectedQuestionIds);
+  }, []);
 
   // Funcție pentru a trece la următoarea întrebare
   const goToNextQuestion = () => {
-    if (currentQuestionIndex < questions.length - 1) {
+    if (currentQuestionIndex < quizQuestions.length - 1) {
       setIsAnimating(true);
       setTimeout(() => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -100,7 +274,11 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
   };
 
   // Funcție pentru a selecta un răspuns
-  const selectAnswer = (questionId: number, selectedOption: string) => {
+  const selectAnswer = (
+    questionId: number,
+    selectedOption: string,
+    points: number
+  ) => {
     const existingAnswerIndex = answers.findIndex(
       (answer) => answer.questionId === questionId
     );
@@ -108,48 +286,42 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
     let newAnswers = [...answers];
 
     if (existingAnswerIndex >= 0) {
-      newAnswers[existingAnswerIndex] = { questionId, selectedOption };
+      newAnswers[existingAnswerIndex] = { questionId, selectedOption, points };
     } else {
-      newAnswers = [...newAnswers, { questionId, selectedOption }];
+      newAnswers = [...newAnswers, { questionId, selectedOption, points }];
     }
 
     setAnswers(newAnswers);
 
     // Salvăm răspunsul în serviciul de date utilizator
-    userDataService.addAnswer(questionId, selectedOption);
+    // Folosim ID-ul original al întrebării pentru salvare - nu reindexat
+    userDataService.addAnswer(questionId, selectedOption, points);
 
     console.log(
-      `Răspuns selectat pentru întrebarea ${questionId}: ${selectedOption}`
+      `Răspuns selectat pentru întrebarea ${questionId}: ${selectedOption} (${points} puncte)`
     );
   };
 
   // Funcție pentru a calcula scorul final
   const calculateScore = () => {
-    let score = 0;
+    let totalPoints = 0;
+    const maxPossiblePoints = quizQuestions.length * 4; // Maxim 4 puncte per întrebare
 
     answers.forEach((answer) => {
-      const question = questions.find((q) => q.id === answer.questionId);
-      if (question) {
-        // Calculăm scorul invers în funcție de indexul opțiunii
-        // Prima opțiune (index 0) primește 3 puncte, a doua 2, a treia 1, a patra 0
-        const optionIndex = question.options.indexOf(answer.selectedOption);
-        const points = 3 - optionIndex;
-        score += points;
-      }
+      totalPoints += answer.points;
     });
 
     // Convertim scorul în procent
-    const maxPossibleScore = questions.length * 3; // Maxim 3 puncte per întrebare
-    const percentage = Math.round((score / maxPossibleScore) * 100);
+    const percentage = Math.round((totalPoints / maxPossiblePoints) * 100);
 
     console.log(
-      `Calculare scor: ${score}/${maxPossibleScore} = ${percentage}%`
+      `Calculare scor: ${totalPoints}/${maxPossiblePoints} = ${percentage}%`
     );
 
     // Adăugăm o secvență try-catch pentru a detecta eventuale erori
     try {
       // Trimitem scorul înapoi prin callback
-      onFinish(percentage);
+      onFinish(percentage, totalPoints, maxPossiblePoints);
     } catch (error) {
       console.error("Eroare la finalizarea quiz-ului:", error);
       alert(
@@ -158,12 +330,24 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
     }
   };
 
+  // Verificăm dacă quiz-ul e pregătit și avem întrebări
+  if (!quizReady || quizQuestions.length === 0) {
+    return (
+      <div className="quiz-screen">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Se încarcă întrebările...</p>
+        </div>
+      </div>
+    );
+  }
+
   // Verificăm dacă întrebarea curentă are un răspuns selectat
-  const currentQuestion = questions[currentQuestionIndex];
+  const currentQuestion = quizQuestions[currentQuestionIndex];
   const currentAnswer = answers.find(
     (a) => a.questionId === currentQuestion.id
   );
-  const isLastQuestion = currentQuestionIndex === questions.length - 1;
+  const isLastQuestion = currentQuestionIndex === quizQuestions.length - 1;
 
   return (
     <div className="quiz-screen">
@@ -174,13 +358,13 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
             className="progress-fill"
             style={{
               width: `${
-                ((currentQuestionIndex + 1) / questions.length) * 100
+                ((currentQuestionIndex + 1) / quizQuestions.length) * 100
               }%`,
             }}
           ></div>
         </div>
         <div className="progress-text">
-          Întrebarea {currentQuestionIndex + 1} din {questions.length}
+          Întrebarea {currentQuestionIndex + 1} din {quizQuestions.length}
         </div>
       </div>
 
@@ -196,11 +380,13 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
             <button
               key={index}
               className={`option-button ${
-                currentAnswer?.selectedOption === option ? "selected" : ""
+                currentAnswer?.selectedOption === option.text ? "selected" : ""
               }`}
-              onClick={() => selectAnswer(currentQuestion.id, option)}
+              onClick={() =>
+                selectAnswer(currentQuestion.id, option.text, option.points)
+              }
             >
-              {option}
+              {option.text}
             </button>
           ))}
         </div>

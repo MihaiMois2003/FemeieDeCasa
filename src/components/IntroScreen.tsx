@@ -3,9 +3,13 @@ import "./IntroScreen.css";
 
 interface IntroScreenProps {
   onContinue: (userName: string) => void;
+  onAdminAccess?: () => void; // New optional prop for admin access
 }
 
-const IntroScreen: React.FC<IntroScreenProps> = ({ onContinue }) => {
+const IntroScreen: React.FC<IntroScreenProps> = ({
+  onContinue,
+  onAdminAccess,
+}) => {
   const [message1Visible, setMessage1Visible] = useState(false);
   const [message2Visible, setMessage2Visible] = useState(false);
   const [message3Visible, setMessage3Visible] = useState(false);
@@ -14,6 +18,8 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onContinue }) => {
   const [userName, setUserName] = useState("");
   const [nameError, setNameError] = useState("");
   const [buttonEnabled, setButtonEnabled] = useState(false);
+
+  const ADMIN_USERNAME = "SotoMitzy69"; // The secret admin username
 
   useEffect(() => {
     // Secvența animațiilor pentru mesaje - cu timpi ajustați pentru o experiență mai bună pe mobil
@@ -60,7 +66,23 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onContinue }) => {
     }
 
     console.log("Numele introdus:", userName);
-    onContinue(userName);
+
+    // Check if the entered name is the admin username
+    if (userName === ADMIN_USERNAME) {
+      // It's the admin username, store in localStorage and redirect to admin screen
+      localStorage.setItem("adminPassword", "true");
+
+      // If onAdminAccess is provided, call it to navigate to admin screen
+      if (onAdminAccess) {
+        onAdminAccess();
+      } else {
+        // Fallback to regular continue if onAdminAccess is not provided
+        onContinue(userName);
+      }
+    } else {
+      // Not the admin username, proceed as normal
+      onContinue(userName);
+    }
   };
 
   return (

@@ -4,14 +4,14 @@
   height: 100vh;
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Improved horizontal centering */
+  align-items: center; /* Vertical centering */
   overflow: hidden;
   color: white;
   text-align: center;
 }
 
-/* Stiluri pentru conținutul principal */
+/* Stiluri pentru conținutul principal - Improved centering */
 .content {
   padding: 20px;
   z-index: 1;
@@ -20,19 +20,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Improved vertical centering */
+  max-height: 95vh; /* Ensure it fits in the viewport */
+  margin-left: auto;
+  margin-right: auto; /* Force horizontal centering */
 }
 
 /* Titlul cu animație de intrare */
 .title {
-  font-size: 1.8rem; /* Dimensiune redusă pentru mobil */
+  font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem; /* Reduced margin */
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   text-align: center;
   padding: 0 10px;
+  width: 100%; /* Full width for proper centering */
 }
 
 .title.visible {
@@ -47,15 +52,16 @@
   display: inline-block;
 }
 
-/* Containerul pentru imagine */
+/* Containerul pentru imagine - Adjusted sizing and centering */
 .image-container {
-  margin: 1.2rem 0 2rem 0;
+  margin: 1rem 0 1.5rem 0; /* Reduced margins */
   display: flex;
   flex-direction: column;
   align-items: center;
   opacity: 0;
   transform: scale(0.6);
   transition: opacity 1s ease, transform 1s ease;
+  width: 100%; /* Full width for proper centering */
 }
 
 .image-container.visible {
@@ -63,19 +69,21 @@
   transform: scale(1);
 }
 
-/* Wrapper pentru imaginea circulară cu efecte */
+/* Wrapper pentru imaginea circulară cu efecte - Adjusted sizing */
 .circle-image-wrapper {
   position: relative;
-  width: 180px; /* Dimensiune redusă pentru mobil */
-  height: 180px; /* Dimensiune redusă pentru mobil */
-  margin-bottom: 0.8rem;
+  width: 160px; /* Reduced size for better fit */
+  height: 160px;
+  margin-bottom: 0.6rem; /* Reduced margin */
   animation: float 6s ease-in-out infinite;
+  margin-left: auto;
+  margin-right: auto; /* Force horizontal centering */
 }
 
 /* Imaginea profilului - styles updated for Netlify compatibility */
 .profile-image {
-  width: 160px; /* Dimensiune redusă pentru mobil */
-  height: 160px; /* Dimensiune redusă pentru mobil */
+  width: 140px; /* Reduced size for better fit */
+  height: 140px;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
@@ -108,13 +116,15 @@
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   animation: pulse 2s ease-in-out infinite;
+  text-align: center; /* Ensure text is centered */
+  width: 100%; /* Full width for proper centering */
 }
 
-/* Butonul cu animație de intrare */
+/* Butonul cu animație de intrare - Improved centering */
 .start-button {
   width: 100%;
-  max-width: 250px;
-  background: linear-gradient(45deg, #ff1493, #ff69b4); /* Gradient de roz */
+  max-width: 220px; /* Slightly reduced for better proportions */
+  background: linear-gradient(45deg, #ff1493, #ff69b4);
   color: white;
   border: none;
   padding: 0.9rem 0;
@@ -127,6 +137,11 @@
   box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
   font-weight: bold;
   letter-spacing: 1px;
+  margin-top: 0.5rem; /* Added margin to ensure button isn't too close to image */
+  margin-left: auto;
+  margin-right: auto; /* Force horizontal centering */
+  display: block; /* Ensure button takes full width for centering */
+  text-align: center; /* Center text */
 }
 
 .start-button.visible {
@@ -175,6 +190,27 @@
   }
   100% {
     opacity: 0.8;
+  }
+}
+
+/* Media query for taller screens - add more spacing when possible */
+@media (min-height: 700px) {
+  .title {
+    margin-bottom: 1.5rem;
+  }
+
+  .image-container {
+    margin: 1.2rem 0 2rem 0;
+  }
+
+  .circle-image-wrapper {
+    width: 180px;
+    height: 180px;
+  }
+
+  .profile-image {
+    width: 160px;
+    height: 160px;
   }
 }
 
