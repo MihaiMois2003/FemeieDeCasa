@@ -119,7 +119,38 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
     }
   }, []);
 
-  const handleSubmit = () => {
+  // Adaugă funcția de verificare gen
+  const checkGender = async (name: string): Promise<boolean> => {
+    try {
+      const response = await fetch("http://localhost:5000/predict-gender", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      });
+
+      const data = await response.json();
+      console.log(
+        `Rezultat pentru "${name}": ${data.gender} (probabilitate feminină: ${
+          data.female_probability * 100
+        }%)`
+      );
+
+      // Returnează true dacă este nume feminin cu probabilitate peste 60%
+      return data.is_female && data.female_probability > 0.6;
+    } catch (error) {
+      console.error("Eroare la verificarea genului:", error);
+      // În caz de eroare, permite accesul (fallback)
+      return true;
+    }
+  };
+
+  // Adaugă state pentru a afișa avertismentul pentru nume masculine
+  const [showGenderWarning, setShowGenderWarning] = useState(false);
+  const [isCheckingGender, setIsCheckingGender] = useState(false);
+
+  const handleSubmit = async () => {
     if (userName.trim().length < 2) {
       setNameError("Te rugăm să introduci un nume valid (minim 2 caractere)");
       return;
@@ -127,20 +158,41 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
 
     console.log("Numele introdus:", userName);
 
-    // Check if the entered name is the admin username
+    // Verifică numele admin
     if (userName === ADMIN_USERNAME) {
-      // It's the admin username, store in localStorage and redirect to admin screen
       localStorage.setItem("adminPassword", "true");
-
-      // If onAdminAccess is provided, call it to navigate to admin screen
       if (onAdminAccess) {
         onAdminAccess();
       } else {
-        // Fallback to regular continue if onAdminAccess is not provided
         onContinue(userName);
       }
-    } else {
-      // Not the admin username, proceed as normal
+      return; // Este important să ieșim aici pentru a nu continua cu verificarea genului
+    }
+
+    // Acum verificăm genul ÎNAINTE de a continua
+    setIsCheckingGender(true);
+    try {
+      const isFemale = await checkGender(userName);
+      setIsCheckingGender(false);
+
+      console.log(
+        `Rezultatul verificării genului pentru "${userName}": ${
+          isFemale ? "feminin" : "masculin"
+        }`
+      );
+
+      if (!isFemale) {
+        // Dacă nu este feminin, arătăm avertismentul și NU continuăm încă
+        setShowGenderWarning(true);
+        // Nu apelăm onContinue aici!
+      } else {
+        // Doar dacă este feminin, continuăm direct
+        onContinue(userName);
+      }
+    } catch (error) {
+      console.error("Eroare la verificarea numelui:", error);
+      setIsCheckingGender(false);
+      // În caz de eroare, permitem continuarea
       onContinue(userName);
     }
   };
@@ -219,14 +271,56 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
           {nameError && <p className="name-error">{nameError}</p>}
 
           <button
-            className={`continue-button ${buttonEnabled ? "enabled" : ""}`}
+            className={`continue-button ${
+              buttonEnabled && !isCheckingGender ? "enabled" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!buttonEnabled}
+            disabled={!buttonEnabled || isCheckingGender}
           >
-            Începe testul
+            {isCheckingGender ? (
+              <span className="loading-spinner"></span>
+            ) : (
+              "Începe testul"
+            )}
           </button>
         </div>
       </div>
+
+      {/* Modal de avertizare pentru nume masculine */}
+      {showGenderWarning && (
+        <div className="gender-warning-modal">
+          <div className="gender-warning-content">
+            <h3>Acest test este doar pentru femei</h3>
+            <p>
+              Numele "{userName}" pare a fi un nume masculin. Acest test este
+              destinat femeilor pentru a-și evalua abilitățile de gospodină.
+            </p>
+            <p>
+              Dacă ești femeie și numele tău este mai puțin comun sau neutru, ne
+              cerem scuze pentru confuzie.
+            </p>
+            <div className="warning-buttons">
+              <button
+                className="warning-button continue"
+                onClick={() => {
+                  setShowGenderWarning(false);
+                  onContinue(userName);
+                }}
+              >
+                Sunt femeie, continuă
+              </button>
+              <button
+                className="warning-button cancel"
+                onClick={() => {
+                  setShowGenderWarning(false);
+                }}
+              >
+                Voi folosi alt nume
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
