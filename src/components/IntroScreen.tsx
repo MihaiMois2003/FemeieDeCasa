@@ -122,13 +122,16 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
   // Adaugă funcția de verificare gen
   const checkGender = async (name: string): Promise<boolean> => {
     try {
-      const response = await fetch("http://localhost:5000/predict-gender", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name }),
-      });
+      const response = await fetch(
+        "https://checknamegender.onrender.com/predict-gender",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name }),
+        }
+      );
 
       const data = await response.json();
       console.log(
