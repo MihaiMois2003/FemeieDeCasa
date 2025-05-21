@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 5px; /* Redus de la 15px */
   color: white;
   overflow: hidden;
   width: 100%; /* Ensure full width */
@@ -17,15 +17,15 @@
 .result-container {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 15px;
-  padding: 20px 15px; /* Reduced horizontal padding */
+  padding: 12px 10px; /* Redus de la 20px 15px */
   width: 100%;
   max-width: 450px;
   text-align: center;
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1;
-  max-height: 95vh; /* Prevent overflow */
-  overflow-y: auto; /* Allow scrolling if needed */
+  max-height: 98vh; /* Crescut pentru a folosi mai mult din ecran */
+  overflow-y: hidden; /* Dezactivat scroll */
   display: flex;
   flex-direction: column;
   margin-left: auto;
@@ -34,8 +34,8 @@
 
 /* Titlul principal */
 .result-title {
-  font-size: 1.6rem; /* Reduced size */
-  margin-bottom: 20px; /* Reduced margin */
+  font-size: 1.3rem; /* Redus de la 1.6rem */
+  margin-bottom: 10px; /* Redus de la 20px */
   color: #ffd700;
   font-weight: 600;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
@@ -48,7 +48,8 @@
   opacity: 0;
   transform: scale(0.5);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 25px;
+  margin-bottom: 12px; /* Redus de la 25px */
+  margin-top: -5px; /* Ajutat să coboare puțin imaginea */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -62,11 +63,11 @@
 
 /* Container pentru imaginea rezultatului */
 .result-image-container {
-  width: 180px;
-  height: 180px;
+  width: 110px; /* Redus de la 180px */
+  height: 110px; /* Redus de la 180px */
   border-radius: 50%;
   overflow: hidden;
-  margin-bottom: 15px;
+  margin-bottom: 10px; /* Redus de la 15px */
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
   border: 4px solid transparent;
   transition: border-color 0.5s ease;
@@ -83,14 +84,14 @@
 /* Stiluri pentru categoria scorului */
 .score-category {
   background-color: rgba(0, 0, 0, 0.3);
-  padding: 10px 20px;
+  padding: 8px 15px; /* Redus de la 10px 20px */
   border-radius: 20px;
-  margin: 10px 0;
+  margin: 5px 0; /* Redus de la 10px 0 */
   transition: all 0.3s ease;
 }
 
 .category-label {
-  font-size: 1.2rem;
+  font-size: 0.95rem; /* Redus de la 1.2rem */
   font-weight: 600;
 }
 
@@ -171,7 +172,7 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 20px; /* Reduced margin */
+  margin-bottom: 10px; /* Redus de la 20px */
   width: 100%; /* Ensure full width */
   text-align: center;
 }
@@ -183,12 +184,12 @@
 
 /* Mesajul de feedback */
 .feedback-message {
-  font-size: 1rem; /* Reduced size */
-  line-height: 1.5;
+  font-size: 0.8rem; /* Redus de la 1rem */
+  line-height: 1.4; /* Redus de la 1.5 */
   color: rgba(255, 255, 255, 0.9);
   text-align: center;
   background-color: rgba(0, 0, 0, 0.2);
-  padding: 15px;
+  padding: 8px; /* Redus de la 15px */
   border-radius: 10px;
 }
 
@@ -197,10 +198,10 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 20px; /* Reduced margin */
+  margin-bottom: 10px; /* Redus de la 20px */
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  padding: 12px; /* Reduced padding */
+  padding: 8px; /* Redus de la 12px */
   border: 1px solid rgba(255, 215, 0, 0.3);
   width: 100%; /* Ensure full width */
 }
@@ -211,44 +212,44 @@
 }
 
 .statistics-title {
-  font-size: 1.1rem; /* Reduced size */
+  font-size: 0.9rem; /* Redus de la 1.1rem */
   font-weight: 600;
   color: #ffd700;
-  margin-bottom: 10px; /* Reduced margin */
+  margin-bottom: 6px; /* Redus de la 10px */
   text-align: center;
 }
 
 .statistics-loading {
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.7);
-  padding: 15px 0;
+  padding: 8px 0;
 }
 
 .statistics-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px; /* Reduced gap */
+  gap: 6px; /* Redus de la 10px */
   width: 100%; /* Ensure full width */
 }
 
 .statistic-item {
   text-align: center;
-  padding: 8px;
+  padding: 5px; /* Redus de la 8px */
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .statistic-value {
-  font-size: 1.2rem; /* Reduced size */
+  font-size: 1.1rem; /* Redus de la 1.2rem */
   font-weight: bold;
   color: #ffd700;
-  margin-bottom: 3px; /* Reduced margin */
+  margin-bottom: 1px; /* Redus de la 3px */
 }
 
 .statistic-label {
-  font-size: 0.75rem; /* Reduced size */
+  font-size: 0.65rem; /* Redus de la 0.75rem */
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -256,11 +257,11 @@
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Reduced gap */
+  gap: 6px; /* Redus de la 10px */
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-top: auto; /* Push to bottom of container */
+  margin-top: 5px; /* Adăugat pentru spațiere mai bună */
   width: 100%; /* Ensure full width */
   align-items: center; /* Center buttons */
 }
@@ -273,15 +274,15 @@
 /* Stiluri pentru butoane */
 .restart-button,
 .share-button {
-  padding: 10px 0; /* Reduced padding */
+  padding: 7px 0; /* Redus de la 10px 0 */
   border-radius: 30px;
   border: none;
-  font-size: 0.95rem; /* Reduced size */
+  font-size: 0.9rem; /* Redus de la 0.95rem */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  max-width: 80%; /* Limit width for better appearance */
+  max-width: 90%; /* Mărit de la 80% pentru spațiere mai bună */
 }
 
 .restart-button {
@@ -294,6 +295,7 @@
   color: white;
   border: 2px solid #ffd700;
 }
+
 /* Share Modal Styles */
 .share-modal {
   position: fixed;
@@ -313,7 +315,7 @@
   background-color: #1a0303;
   border: 2px solid #ffd700;
   border-radius: 15px;
-  padding: 25px;
+  padding: 20px; /* Redus de la 25px */
   width: 90%;
   max-width: 350px;
   text-align: center;
@@ -322,15 +324,15 @@
 
 .share-modal-content h3 {
   color: #ffd700;
-  margin-bottom: 20px;
-  font-size: 1.4rem;
+  margin-bottom: 15px; /* Redus de la 20px */
+  font-size: 1.2rem; /* Redus de la 1.4rem */
 }
 
 .share-options {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 10px; /* Redus de la 15px */
+  margin-bottom: 15px; /* Redus de la 20px */
 }
 
 .share-option-button {
@@ -338,10 +340,10 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 12px 15px;
+  padding: 10px 12px; /* Redus de la 12px 15px */
   border-radius: 10px;
   border: none;
-  font-size: 1.1rem;
+  font-size: 1rem; /* Redus de la 1.1rem */
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -349,7 +351,7 @@
 }
 
 .share-option-button .icon {
-  font-size: 1.3rem;
+  font-size: 1.2rem; /* Redus de la 1.3rem */
 }
 
 .share-option-button.instagram {
@@ -379,10 +381,10 @@
   background-color: rgba(255, 255, 255, 0.2);
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 16px; /* Redus de la 10px 20px */
   border-radius: 50px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem; /* Redus de la 1rem */
   transition: all 0.3s ease;
 }
 
@@ -417,6 +419,38 @@
   }
 }
 
+/* Media query pentru telefoane mici - ajustare specială */
+@media (max-height: 640px) {
+  .result-image-container {
+    width: 90px;
+    height: 90px;
+  }
+
+  .category-label {
+    font-size: 0.85rem;
+  }
+
+  .feedback-message {
+    font-size: 0.75rem;
+    padding: 6px;
+  }
+
+  .statistic-value {
+    font-size: 0.95rem;
+  }
+
+  .statistics-title {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+
+  .restart-button,
+  .share-button {
+    padding: 6px 0;
+    font-size: 0.8rem;
+  }
+}
+
 /* Media queries for taller screens */
 @media (min-height: 700px) {
   .result-container {
@@ -424,16 +458,17 @@
   }
 
   .result-image-container {
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
   }
 
   .category-label {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .feedback-message {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    padding: 12px;
   }
 
   .statistic-value {
@@ -442,7 +477,8 @@
 
   .restart-button,
   .share-button {
-    padding: 12px 0;
+    padding: 10px 0;
+    font-size: 1rem;
   }
 }
 
@@ -453,32 +489,33 @@
   }
 
   .result-title {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .result-image-container {
-    width: 220px;
-    height: 220px;
+    width: 160px;
+    height: 160px;
   }
 
   .category-label {
-    font-size: 1.4rem;
-  }
-
-  .feedback-message {
-    font-size: 1.05rem;
-  }
-
-  .statistics-title {
     font-size: 1.2rem;
   }
 
+  .feedback-message {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+
+  .statistics-title {
+    font-size: 1.1rem;
+  }
+
   .statistic-value {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .statistic-label {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -489,8 +526,8 @@
   }
 
   .result-image-container {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
   }
 
   .statistics-container {
