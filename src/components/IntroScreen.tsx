@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./IntroScreen.css";
 
 interface IntroScreenProps {
@@ -18,6 +18,10 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
   const [userName, setUserName] = useState("");
   const [nameError, setNameError] = useState("");
   const [buttonEnabled, setButtonEnabled] = useState(false);
+  // Adaugă state pentru a urmări dacă tastatura este vizibilă
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  // Referință către containerul de intrare pentru a putea face focus/blur
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const ADMIN_USERNAME = "SotoMitzy69"; // The secret admin username
 
@@ -59,6 +63,62 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
     }
   }, [userName]);
 
+  // Adăugăm detectarea evenimentelor tastaturii
+  useEffect(() => {
+    // Functii pentru a detecta când tastatura apare/dispare
+    const handleKeyboardShow = () => {
+      console.log("Tastatura s-a deschis");
+      setIsKeyboardVisible(true);
+    };
+
+    const handleKeyboardHide = () => {
+      console.log("Tastatura s-a închis");
+      setIsKeyboardVisible(false);
+    };
+
+    // Pentru iOS
+    window.addEventListener("focusin", handleKeyboardShow);
+    window.addEventListener("focusout", handleKeyboardHide);
+
+    // Pentru Android - adăugăm verificări pentru visualViewport
+    if (typeof window !== "undefined" && window.visualViewport) {
+      const viewportHandler = () => {
+        // Verificăm din nou că visualViewport există
+        if (window.visualViewport) {
+          const currentHeight = window.visualViewport.height;
+          const windowHeight = window.innerHeight;
+
+          // Dacă viewport-ul e mai mic decât înălțimea ferestrei, probabil tastatura e deschisă
+          if (currentHeight < windowHeight * 0.8) {
+            handleKeyboardShow();
+          } else {
+            handleKeyboardHide();
+          }
+        }
+      };
+
+      window.visualViewport.addEventListener("resize", viewportHandler);
+
+      // Cleanup pentru acest event listener
+      return () => {
+        // Verificăm din nou că visualViewport există înainte de a elimina listener-ul
+        if (window.visualViewport) {
+          window.visualViewport.removeEventListener("resize", viewportHandler);
+        }
+
+        // De asemenea, eliminăm și celelalte event listeners
+        window.removeEventListener("focusin", handleKeyboardShow);
+        window.removeEventListener("focusout", handleKeyboardHide);
+      };
+    } else {
+      // Dacă visualViewport nu există, curățăm doar listeners pentru iOS
+      return () => {
+        window.removeEventListener("focusin", handleKeyboardShow);
+        window.removeEventListener("focusout", handleKeyboardHide);
+      };
+    }
+  }, []);
+
   const handleSubmit = () => {
     if (userName.trim().length < 2) {
       setNameError("Te rugăm să introduci un nume valid (minim 2 caractere)");
@@ -85,10 +145,22 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
     }
   };
 
+  // Handler pentru focus pe input
+  const handleInputFocus = () => {
+    setIsKeyboardVisible(true);
+  };
+
+  // Handler pentru blur pe input
+  const handleInputBlur = () => {
+    setIsKeyboardVisible(false);
+  };
+
   return (
-    <div className="intro-screen">
+    <div
+      className={`intro-screen ${isKeyboardVisible ? "keyboard-visible" : ""}`}
+    >
       <div className="intro-content">
-        {/* Mesajele animaționale - cu clase ajustate pentru mobile */}
+        {/* Mesajele - neschimbate */}
         <div
           className={`message-box message-1 ${
             message1Visible ? "visible" : ""
@@ -123,7 +195,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
           </p>
         </div>
 
-        {/* Input pentru nume - cu layout optimizat pentru mobile */}
+        {/* Input pentru nume - cu adăugarea evenimentelor pentru focus/blur */}
         <div
           className={`name-input-container ${
             nameInputVisible ? "visible" : ""
@@ -131,9 +203,12 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
         >
           <div className="input-wrapper">
             <input
+              ref={inputRef}
               type="text"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
               placeholder="Numele tău..."
               className="name-input"
               autoComplete="off"

@@ -217,6 +217,11 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
   // Numărul de întrebări care vor fi afișate în quiz
   const NUM_QUESTIONS_IN_QUIZ = 10;
 
+  // State pentru a ține evidența opțiunilor ordonate aleatoriu pentru fiecare întrebare
+  const [shuffledOptions, setShuffledOptions] = useState<{
+    [questionId: number]: { text: string; points: number }[];
+  }>({});
+
   // Selectarea aleatorie a întrebărilor la încărcarea componentei
   useEffect(() => {
     // Funcție pentru a amesteca un array (algoritmul Fisher-Yates)
@@ -233,8 +238,19 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
     const shuffledQuestions = shuffleArray(allQuestions);
     const selectedQuestions = shuffledQuestions.slice(0, NUM_QUESTIONS_IN_QUIZ);
 
-    // IMPORTANT: Nu mai reindexăm întrebările - păstrăm ID-urile originale
+    // Amestecă opțiunile pentru fiecare întrebare
+    const initialShuffledOptions: {
+      [questionId: number]: { text: string; points: number }[];
+    } = {};
+
+    selectedQuestions.forEach((question) => {
+      // Creează o copie a opțiunilor și le amestecă
+      initialShuffledOptions[question.id] = shuffleArray([...question.options]);
+    });
+
+    // Setează întrebările și opțiunile amestecate
     setQuizQuestions(selectedQuestions);
+    setShuffledOptions(initialShuffledOptions);
 
     // Store the selected question IDs in the userDataService
     const selectedQuestionIds = selectedQuestions.map((q) => q.id);
@@ -374,9 +390,9 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
       >
         <h2 className="question-text">{currentQuestion.text}</h2>
 
-        {/* Opțiunile de răspuns */}
+        {/* Opțiunile de răspuns - Acum folosim opțiunile amestecate */}
         <div className="options-container">
-          {currentQuestion.options.map((option, index) => (
+          {shuffledOptions[currentQuestion.id]?.map((option, index) => (
             <button
               key={index}
               className={`option-button ${
