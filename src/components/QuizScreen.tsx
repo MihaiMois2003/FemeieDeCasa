@@ -28,179 +28,222 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
   const allQuestions: Question[] = [
     {
       id: 1,
-      text: "Cât de des gătești acasă?",
+      text: "Cum îți petreci o zi liberă ideală?",
       options: [
-        { text: "Zilnic", points: 4 },
-        { text: "De câteva ori pe săptămână", points: 3 },
-        { text: "Rar", points: 2 },
-        { text: "Niciodată", points: 1 },
+        { text: "Gătesc ceva nou, citesc, mă relaxez acasă", points: 4 },
+        { text: "Ies cu prietenii în oraș", points: 2 },
+        { text: "Merg la shopping sau la un brunch drăguț", points: 2 },
+        { text: "Dorm până târziu și stau pe telefon", points: 1 },
       ],
     },
     {
       id: 2,
-      text: "Ce preferi să faci când ai timp liber?",
+      text: "Care dintre următoarele este un hobby care te definește?",
       options: [
-        { text: "Să fac curat în casă", points: 4 },
-        { text: "Să mă relaxez uitându-mă la TV", points: 3 },
-        { text: "Să ies în oraș cu prietenii", points: 2 },
-        { text: "Să stau pe telefon/social media", points: 1 },
+        { text: "Îmi place să citesc și să învăț lucruri noi", points: 4 },
+        { text: "Îmi place să călătoresc cât mai des", points: 1 },
+        { text: "Îmi place să ies și să socializez", points: 2 },
+        { text: "Îmi place să am grijă de mine și de cei dragi", points: 3 },
       ],
     },
     {
       id: 3,
-      text: "Cum te simți când casa este dezordonată?",
+      text: "Ai fost vreodată într-o relație doar pentru beneficii? (ex: cadouri, vacanțe, confort)",
       options: [
-        { text: "Nu pot să mă relaxez deloc", points: 4 },
-        { text: "Mă deranjează puțin", points: 3 },
-        { text: "Îmi pasă doar când vin musafiri", points: 2 },
-        { text: "Nu mă afectează deloc", points: 1 },
+        { text: "Niciodată, mi se pare imoral", points: 4 },
+        { text: "Poate am acceptat ceva, dar n-am profitat", points: 3 },
+        { text: "Da, dar doar când relația nu era serioasă", points: 2 },
+        { text: "Da, dacă tot oferă, de ce nu?", points: 1 },
       ],
     },
     {
       id: 4,
-      text: "Cât de des faci curățenie generală?",
+      text: "Cât de des postezi selfie-uri sau poze provocatoare pe social media?",
       options: [
-        { text: "Săptămânal", points: 4 },
-        { text: "Lunar", points: 3 },
-        { text: "Doar când este necesar", points: 2 },
-        { text: "Rar sau niciodată", points: 1 },
+        { text: "Aproape niciodată", points: 4 },
+        { text: "Foarte rar, doar la ocazii", points: 3 },
+        { text: "Destul de des, îmi place să mă exprim", points: 2 },
+        { text: "Mereu, trebuie să-mi țin engagement-ul sus", points: 1 },
       ],
     },
     {
       id: 5,
-      text: "Ce faci când trebuie să găzduiești musafiri?",
+      text: "Cum reacționezi când primești DM-uri de la bărbați necunoscuți?",
       options: [
-        { text: "Pregătesc totul de la zero cu grijă", points: 4 },
-        { text: "Fac cumpărături și ceva simplu", points: 3 },
-        { text: "Comand mâncare de afară", points: 2 },
-        { text: "Îi trimit la restaurant", points: 1 },
+        { text: "Nu răspund deloc", points: 4 },
+        { text: "Dacă e respectuos, poate răspund scurt", points: 3 },
+        { text: "Depinde ce fel de DM e", points: 2 },
+        { text: "Îmi place atenția, de ce nu?", points: 1 },
       ],
     },
     {
       id: 6,
-      text: "Cât de importantă este pentru tine organizarea locuinței?",
+      text: "Ce înseamnă respectul într-o relație pentru tine?",
       options: [
-        {
-          text: "Extrem de importantă, totul trebuie să fie perfect ordonat",
-          points: 4,
-        },
-        {
-          text: "Destul de importantă, prefer să fie lucrurile la locul lor",
-          points: 3,
-        },
-        {
-          text: "Moderat importantă, câtă vreme pot găsi ce-mi trebuie",
-          points: 2,
-        },
-        { text: "Nu prea importantă, pot trăi și în dezordine", points: 1 },
+        { text: "Fidelitate, sprijin și limite clare", points: 4 },
+        { text: "Să nu ne controlăm prea mult", points: 2 },
+        { text: "Fiecare face ce simte, fără stres", points: 1 },
+        { text: "Respectul vine doar dacă e reciproc", points: 3 },
       ],
     },
     {
       id: 7,
-      text: "Cât de des speli vasele?",
+      text: "Cum reacționezi când cineva nu e de acord cu tine?",
       options: [
-        { text: "Imediat după fiecare masă", points: 4 },
-        { text: "La finalul zilei", points: 3 },
-        { text: "Când se adună mai multe", points: 2 },
-        { text: "Când nu mai am vase curate", points: 1 },
+        { text: "Încerc să înțeleg perspectiva lor", points: 4 },
+        { text: "Mă simt ofensată, dar încerc să nu arăt", points: 3 },
+        { text: "Mă enervez și reacționez", points: 2 },
+        { text: "Le arăt că nu au dreptate", points: 1 },
       ],
     },
     {
       id: 8,
-      text: "Cum procedezi cu hainele murdare?",
+      text: "Cum vezi rolul femeii într-o familie?",
       options: [
-        { text: "Le spăl imediat cum se adună un coș", points: 4 },
+        { text: "Sprijin, echilibru, grijă, feminitate", points: 4 },
+        { text: "Trebuie să fie independentă total", points: 2 },
+        { text: "Să-și urmeze visurile, cu sau fără familie", points: 2 },
+        { text: "Nu cred în roluri, toți fac tot", points: 3 },
+      ],
+    },
+    {
+      id: 9,
+      text: "Ce înseamnă frumusețea pentru tine?",
+      options: [
+        { text: "Un amestec de suflet, eleganță și îngrijire", points: 4 },
+        { text: "Să arăți bine și să atragi", points: 2 },
+        { text: "Să fii apreciată de ceilalți", points: 1 },
+        { text: "Să te simți bine în pielea ta", points: 3 },
+      ],
+    },
+    {
+      id: 10,
+      text: "Ai accepta bani de la un bărbat fără să fie o relație serioasă?",
+      options: [
+        { text: "Niciodată, mi se pare umilitor", points: 4 },
+        { text: "Poate, dacă e un cadou sincer", points: 3 },
+        { text: "Dacă-mi oferă, de ce nu?", points: 2 },
+        { text: "Da, bărbații trebuie să ofere mereu", points: 1 },
+      ],
+    },
+    {
+      id: 11,
+      text: "Ce apreciezi cel mai mult la un bărbat?",
+      options: [
+        { text: "Respect, calm, loialitate", points: 4 },
+        { text: "Siguranță financiară și putere", points: 2 },
+        { text: "Să mă facă să râd și să mă distrez", points: 2 },
+        { text: "Să fie romantic și atent non-stop", points: 3 },
+      ],
+    },
+    {
+      id: 12,
+      text: "Ce stil vestimentar preferi?",
+      options: [
+        { text: "Elegant, feminin și decent", points: 4 },
+        { text: "Casual și îngrijit", points: 3 },
+        { text: "Modern, provocator", points: 2 },
+        { text: "Orice, nu contează cum arăt", points: 1 },
+      ],
+    },
+    {
+      id: 13,
+      text: "Ce părere ai despre aventurile de-o noapte?",
+      options: [
+        { text: "Total împotrivă", points: 4 },
+        { text: "Nu mă reprezintă, dar nu judec", points: 3 },
+        { text: "Am avut, dar nu le mai caut", points: 2 },
+        { text: "Sunt ok, fac parte din viață", points: 1 },
+      ],
+    },
+    {
+      id: 14,
+      text: "Câte relații serioase ai avut până acum?",
+      options: [
+        { text: "Una sau două, lungi și serioase", points: 4 },
+        { text: "Câteva, dar toate au fost serioase", points: 3 },
+        { text: "Multe, dar fără stabilitate", points: 2 },
+        { text: "N-am avut relații serioase", points: 1 },
+      ],
+    },
+    {
+      id: 15,
+      text: "Fumezi?",
+      options: [
+        { text: "Nu am fumat niciodată", points: 4 },
+        { text: "Am fumat, dar m-am lăsat", points: 3 },
+        { text: "Fumez ocazional", points: 2 },
+        { text: "Fumez zilnic", points: 1 },
+      ],
+    },
+    {
+      id: 16,
+      text: "Cât de des bei alcool?",
+      options: [
+        { text: "Niciodată", points: 4 },
+        { text: "Ocazional la evenimente speciale", points: 3 },
+        { text: "De câteva ori pe lună", points: 2 },
+        { text: "Săptămânal sau mai des", points: 1 },
+      ],
+    },
+    {
+      id: 17,
+      text: "Cum alegi să-ți petreci o seară de weekend, în mod ideal?",
+      options: [
         {
-          text: "Spăl regulat, o dată sau de două ori pe săptămână",
+          text: "Petrec timp acasă, liniștit(ă), cu persoana iubită sau cu familia",
+          points: 4,
+        },
+        {
+          text: "Ies rar, în locuri calme sau cu prieteni apropiați",
           points: 3,
         },
-        { text: "Spăl când nu mai am haine curate", points: 2 },
         {
-          text: "De obicei aștept până când nu mai am loc în coșul de rufe",
+          text: "Îmi place să ies des, viața e făcută pentru distracție",
+          points: 2,
+        },
+        {
+          text: "Mă energizează cluburile, petrecerile și socializarea cu oameni noi",
           points: 1,
         },
       ],
     },
     {
-      id: 9,
-      text: "Care este atitudinea ta față de gătit?",
+      id: 18,
+      text: "Cât de importantă este discreția în relațiile personale?",
       options: [
         {
-          text: "Îmi place să gătesc mâncăruri complexe și să experimentez",
+          text: "Foarte importantă: nu expun detalii intime, prefer intimitatea și respectul reciproc",
           points: 4,
         },
-        { text: "Gătesc regulat rețete simple", points: 3 },
-        { text: "Gătesc doar când trebuie, prefer lucruri simple", points: 2 },
-        { text: "Evit să gătesc ori de câte ori pot", points: 1 },
+        {
+          text: "Împărtășesc doar cu o persoană de maximă încredere, când simt nevoia",
+          points: 3,
+        },
+        { text: "Vorbesc deschis cu prietenele, cred că e normal", points: 2 },
+        {
+          text: "Îmi place să împărtășesc totul online, oamenii trebuie să știe ce trăiesc",
+          points: 1,
+        },
       ],
     },
     {
-      id: 10,
-      text: "Cum te descurci cu bugetul gospodăriei?",
+      id: 19,
+      text: "Cum reacționezi când primești flori de la cineva drag?",
       options: [
         {
-          text: "Planific riguros toate cheltuielile și economisesc",
+          text: "Le apreciez sincer, le pun într-o vază și le îngrijesc cu drag",
           points: 4,
         },
-        { text: "Țin evidența cheltuielilor importante", points: 3 },
-        { text: "Mă descurc cum pot, fără un plan strict", points: 2 },
-        { text: "Nu mă preocupă prea mult bugetul", points: 1 },
-      ],
-    },
-    {
-      id: 11,
-      text: "Cât de des faci cumpărături pentru casă?",
-      options: [
-        { text: "Planific săptămânal și fac cumpărături organizat", points: 4 },
-        { text: "De câteva ori pe săptămână, după necesități", points: 3 },
-        { text: "Cumpăr când îmi amintesc că lipsește ceva", points: 2 },
-        { text: "De obicei când nu mai am nimic în frigider", points: 1 },
-      ],
-    },
-    {
-      id: 12,
-      text: "Ce faci când se strică ceva prin casă?",
-      options: [
         {
-          text: "Încerc să repar eu sau chem imediat un specialist",
-          points: 4,
+          text: "Le accept, zâmbesc, dar nu sunt foarte pasionată de flori",
+          points: 3,
         },
-        { text: "Programez o reparație cât de curând posibil", points: 3 },
-        { text: "Aștept până devine o problemă serioasă", points: 2 },
-        { text: "Ignor problema cât timp se poate", points: 1 },
-      ],
-    },
-    {
-      id: 13,
-      text: "Cum te raportezi la decorarea casei?",
-      options: [
+        { text: "Îmi plac, dar doar dacă sunt scumpe sau speciale", points: 2 },
         {
-          text: "Îmi place să decorez și să schimb frecvent aspectul locuinței",
-          points: 4,
+          text: "Mă plictisesc florile, prefer ceva practic în schimb",
+          points: 1,
         },
-        { text: "Acord atenție detaliilor și aspectului plăcut", points: 3 },
-        { text: "Decorez minimal, doar ce e necesar", points: 2 },
-        { text: "Nu mă interesează prea mult aspectul estetic", points: 1 },
-      ],
-    },
-    {
-      id: 14,
-      text: "Cum te descurci cu plantele din casă?",
-      options: [
-        { text: "Am multe plante și le îngrijesc cu atenție", points: 4 },
-        { text: "Am câteva plante pe care le îngrijesc decent", points: 3 },
-        { text: "Am plante care necesită puțină îngrijire", points: 2 },
-        { text: "Evit să am plante pentru că nu le pot îngriji", points: 1 },
-      ],
-    },
-    {
-      id: 15,
-      text: "Cât de des schimbi așternuturile de pat?",
-      options: [
-        { text: "Săptămânal, fără excepție", points: 4 },
-        { text: "La 1-2 săptămâni", points: 3 },
-        { text: "La 3-4 săptămâni", points: 2 },
-        { text: "Când îmi amintesc sau când par murdare", points: 1 },
       ],
     },
   ];
@@ -215,7 +258,7 @@ const QuizScreen = ({ onFinish }: QuizScreenProps) => {
   const [quizReady, setQuizReady] = useState(false);
 
   // Numărul de întrebări care vor fi afișate în quiz
-  const NUM_QUESTIONS_IN_QUIZ = 10;
+  const NUM_QUESTIONS_IN_QUIZ = 13;
 
   // State pentru a ține evidența opțiunilor ordonate aleatoriu pentru fiecare întrebare
   const [shuffledOptions, setShuffledOptions] = useState<{

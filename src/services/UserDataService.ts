@@ -5,6 +5,8 @@ import {
   query,
   orderBy,
   Timestamp,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 
@@ -24,6 +26,7 @@ export interface UserData {
   answers: UserAnswer[];
   timestamp: Date;
   questionsSelected?: number[]; // Add optional array of questions that were selected
+  instagramUsername?: string; // Add Instagram username field
 }
 
 // Clasa care gestionează datele utilizatorilor
@@ -31,6 +34,7 @@ class UserDataService {
   private currentUser: UserData | null = null;
   private currentAnswers: UserAnswer[] = [];
   private questionsSelected: number[] = [];
+  private currentUserDocId: string | null = null; // Store the Firestore document ID
 
   // Creează un nou utilizator cu numele dat
   async createUser(name: string): Promise<string> {
@@ -47,6 +51,7 @@ class UserDataService {
     // Reset answers and selected questions for new user
     this.currentAnswers = [];
     this.questionsSelected = [];
+    this.currentUserDocId = null; // Reset document ID
 
     console.log(`Utilizator nou creat: ${name} (ID: ${userId})`);
     return userId;
@@ -146,6 +151,7 @@ class UserDataService {
 
       // Salvează datele utilizatorului în Firestore
       const userDocRef = await addDoc(collection(db, "users"), firestoreData);
+      this.currentUserDocId = userDocRef.id; // Store the document ID for later updates
 
       console.log(
         `Test finalizat pentru ${this.currentUser.name} cu scorul ${score}%`
@@ -157,6 +163,33 @@ class UserDataService {
       return Promise.resolve();
     } catch (error) {
       console.error("Eroare la salvarea datelor în Firebase:", error);
+      return Promise.reject(error);
+    }
+  }
+
+  // Update Instagram username for current user
+  async updateUserInstagram(instagramUsername: string): Promise<void> {
+    if (!this.currentUser || !this.currentUserDocId) {
+      console.error("Nu există niciun utilizator curent sau ID document!");
+      return Promise.reject("No current user or document ID");
+    }
+
+    try {
+      // Update the document in Firestore
+      const userDocRef = doc(db, "users", this.currentUserDocId);
+      await updateDoc(userDocRef, {
+        instagramUsername: instagramUsername,
+      });
+
+      // Update local user data
+      this.currentUser.instagramUsername = instagramUsername;
+
+      console.log(
+        `Instagram username actualizat pentru ${this.currentUser.name}: ${instagramUsername}`
+      );
+      return Promise.resolve();
+    } catch (error) {
+      console.error("Eroare la actualizarea Instagram username:", error);
       return Promise.reject(error);
     }
   }
@@ -200,6 +233,10 @@ class UserDataService {
 
         if (data.questionsSelected !== undefined) {
           user.questionsSelected = data.questionsSelected;
+        }
+
+        if (data.instagramUsername !== undefined) {
+          user.instagramUsername = data.instagramUsername;
         }
 
         // Ensure answers have points (for backward compatibility)

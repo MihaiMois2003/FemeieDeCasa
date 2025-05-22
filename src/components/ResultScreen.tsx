@@ -18,9 +18,13 @@ interface ResultScreenProps {
 const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
   const [showResult, setShowResult] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+  const [showInstagram, setShowInstagram] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [userName, setUserName] = useState("");
+  const [instagramUsername, setInstagramUsername] = useState("");
+  const [instagramSubmitted, setInstagramSubmitted] = useState(false);
+  const [isSubmittingInstagram, setIsSubmittingInstagram] = useState(false);
   const [statistics, setStatistics] = useState({
     totalUsers: 0,
     averageScore: 0,
@@ -46,6 +50,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
         (actionButtons as HTMLElement).style.display = "none";
       }
 
+      // Also hide instagram section during capture
+      const instagramSection =
+        resultContentRef.current.querySelector(".instagram-section");
+      if (instagramSection) {
+        (instagramSection as HTMLElement).style.display = "none";
+      }
+
       // Capture the content as canvas
       const canvas = await html2canvas(resultContentRef.current, {
         scale: 2, // Higher scale for better quality
@@ -56,6 +67,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
       // Show the buttons again
       if (actionButtons) {
         (actionButtons as HTMLElement).style.display = "flex";
+      }
+
+      // Show instagram section again if applicable
+      if (instagramSection) {
+        (instagramSection as HTMLElement).style.display = "block";
       }
 
       // Convert canvas to image and download
@@ -76,6 +92,31 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
     } catch (error) {
       console.error("Error capturing screenshot:", error);
       alert("A apărut o eroare la crearea imaginii. Încearcă din nou.");
+    }
+  };
+
+  // Handle Instagram username submission
+  const handleInstagramSubmit = async () => {
+    if (!instagramUsername.trim()) {
+      alert("Te rog să introduci un username de Instagram valid!");
+      return;
+    }
+
+    setIsSubmittingInstagram(true);
+
+    try {
+      // Update the current user data with Instagram username
+      await userDataService.updateUserInstagram(instagramUsername.trim());
+      setInstagramSubmitted(true);
+
+      setTimeout(() => {
+        alert("Mulțumim! Username-ul tău Instagram a fost salvat cu succes!");
+      }, 500);
+    } catch (error) {
+      console.error("Error saving Instagram username:", error);
+      alert("A apărut o eroare la salvarea username-ului. Încearcă din nou.");
+    } finally {
+      setIsSubmittingInstagram(false);
     }
   };
 
@@ -201,6 +242,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
     return image0to20;
   };
 
+  // Check if user qualifies for Instagram section
+  const shouldShowInstagram = score >= 60;
+
   // Efectul de animație secvențială pentru afișarea rezultatelor
   useEffect(() => {
     // Afișăm rezultatul după o scurtă întârziere
@@ -215,26 +259,41 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
       setShowMessage(true);
     }, 2000);
 
-    // Afișăm statisticile după mesajul de feedback
-    const statsTimer = setTimeout(() => {
-      console.log("Statisticile devin vizibile");
-      setShowStats(true);
-    }, 3500);
+    // Afișăm secțiunea Instagram dacă scorul este >= 60%
+    const instagramTimer = setTimeout(() => {
+      if (shouldShowInstagram) {
+        console.log("Secțiunea Instagram devine vizibilă");
+        setShowInstagram(true);
+      }
+    }, 3000);
+
+    // Afișăm statisticile după mesajul de feedback (sau Instagram)
+    const statsTimer = setTimeout(
+      () => {
+        console.log("Statisticile devin vizibile");
+        setShowStats(true);
+      },
+      shouldShowInstagram ? 3800 : 3500
+    );
 
     // Afișăm butoanele după ce statisticile au fost afișate
-    const buttonsTimer = setTimeout(() => {
-      console.log("Butoanele devin vizibile");
-      setShowButtons(true);
-    }, 4500);
+    const buttonsTimer = setTimeout(
+      () => {
+        console.log("Butoanele devin vizibile");
+        setShowButtons(true);
+      },
+      shouldShowInstagram ? 4300 : 4500
+    );
 
     // Curățăm timerele la demontarea componentei
     return () => {
       clearTimeout(resultTimer);
       clearTimeout(messageTimer);
+      clearTimeout(instagramTimer);
       clearTimeout(statsTimer);
       clearTimeout(buttonsTimer);
     };
-  }, []);
+  }, [shouldShowInstagram]);
 
   // Calculăm clase CSS bazate pe scor pentru cercul de progres
   const getScoreClass = () => {
@@ -271,6 +330,48 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRestart }) => {
         <div className={`feedback-container ${showMessage ? "visible" : ""}`}>
           <p className="feedback-message">{feedback.message}</p>
         </div>
+
+        {/* Instagram Section - only for scores >= 60% */}
+        {shouldShowInstagram && (
+          <div
+            className={`instagram-section ${showInstagram ? "visible" : ""}`}
+          >
+            {!instagramSubmitted ? (
+              <div className="instagram-form">
+                <div className="instagram-message">
+                  <p>
+                    🎉 Bravo! Ești o adevărată femeie de casă și de aceea
+                    trebuie să îți lași Instagram-ul, deoarece orice bărbat ar
+                    vrea să te aibă!
+                  </p>
+                </div>
+                <div className="instagram-input-container">
+                  <input
+                    type="text"
+                    placeholder="Instagram username"
+                    value={instagramUsername}
+                    onChange={(e) => setInstagramUsername(e.target.value)}
+                    className="instagram-input"
+                    disabled={isSubmittingInstagram}
+                  />
+                  <button
+                    onClick={handleInstagramSubmit}
+                    disabled={
+                      isSubmittingInstagram || !instagramUsername.trim()
+                    }
+                    className="instagram-submit-btn"
+                  >
+                    {isSubmittingInstagram ? "..." : "✓"}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="instagram-success">
+                <p>✨ Mulțumim! Toți bărbații vor fi geloși!</p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Statistici */}
         <div className={`statistics-container ${showStats ? "visible" : ""}`}>
