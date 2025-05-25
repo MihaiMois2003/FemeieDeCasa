@@ -3,44 +3,52 @@
 /* Stiluri pentru ecranul de rezultate */
 .result-screen {
   min-height: 100vh;
+  height: 100vh; /* Force exact viewport height */
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3px; /* Redus pentru a face loc pentru secțiunea Instagram */
+  padding: 5px; /* Minimal padding */
   color: white;
   overflow: hidden;
-  width: 100%; /* Ensure full width */
+  width: 100%;
+  box-sizing: border-box; /* Include padding in height calculation */
 }
 
 /* Containerul principal al rezultatelor */
 .result-container {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 15px;
-  padding: 8px 10px; /* Redus pentru a face loc pentru mai mult conținut */
+  padding: 6px 8px; /* Reduced padding for tighter fit */
   width: 100%;
   max-width: 450px;
   text-align: center;
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1;
-  max-height: 98vh; /* Crescut pentru a folosi mai mult din ecran */
-  overflow-y: hidden; /* Dezactivat scroll */
+  height: calc(
+    100vh - 10px
+  ); /* Use almost full viewport height minus padding */
+  max-height: calc(100vh - 10px);
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* Distribute space evenly */
   margin-left: auto;
-  margin-right: auto; /* Ensure horizontal centering */
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 /* Titlul principal */
 .result-title {
-  font-size: 1.2rem; /* Redus puțin pentru a face loc */
-  margin-bottom: 8px; /* Redus de la 10px */
+  font-size: 1.1rem; /* Slightly smaller */
+  margin-bottom: 5px; /* Reduced margin */
   color: #ffd700;
   font-weight: 600;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  width: 100%; /* Ensure full width */
+  width: 100%;
   text-align: center;
+  flex-shrink: 0; /* Don't shrink */
 }
 
 /* Stiluri pentru rezultat cu imagine */
@@ -48,12 +56,12 @@
   opacity: 0;
   transform: scale(0.5);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 8px; /* Redus pentru a face loc */
-  margin-top: -5px; /* Ajustat să coboare puțin imaginea */
+  margin-bottom: 4px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-shrink: 0; /* Don't shrink */
 }
 
 .result-display.visible {
@@ -63,13 +71,13 @@
 
 /* Container pentru imaginea rezultatului */
 .result-image-container {
-  width: 95px; /* Redus pentru a face loc pentru Instagram */
-  height: 95px; /* Redus pentru a face loc pentru Instagram */
+  width: 80px; /* Smaller for better fit */
+  height: 80px;
   border-radius: 50%;
   overflow: hidden;
-  margin-bottom: 6px; /* Redus */
+  margin-bottom: 4px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-  border: 4px solid transparent;
+  border: 3px solid transparent;
   transition: border-color 0.5s ease;
 }
 
@@ -84,14 +92,14 @@
 /* Stiluri pentru categoria scorului */
 .score-category {
   background-color: rgba(0, 0, 0, 0.3);
-  padding: 6px 12px; /* Redus pentru a face loc */
+  padding: 4px 10px; /* Reduced padding */
   border-radius: 20px;
-  margin: 4px 0; /* Redus */
+  margin: 2px 0;
   transition: all 0.3s ease;
 }
 
 .category-label {
-  font-size: 0.85rem; /* Redus pentru a face loc */
+  font-size: 0.8rem; /* Smaller font */
   font-weight: 600;
 }
 
@@ -172,9 +180,11 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 6px; /* Redus pentru a face loc */
-  width: 100%; /* Ensure full width */
+  margin-bottom: 4px;
+  width: 100%;
   text-align: center;
+  flex-shrink: 1; /* Allow to shrink if needed */
+  min-height: 0; /* Allow to be smaller */
 }
 
 .feedback-container.visible {
@@ -184,12 +194,12 @@
 
 /* Mesajul de feedback */
 .feedback-message {
-  font-size: 0.75rem; /* Redus pentru a face loc */
-  line-height: 1.3; /* Redus */
+  font-size: 0.7rem; /* Smaller text */
+  line-height: 1.2;
   color: rgba(255, 255, 255, 0.9);
   text-align: center;
   background-color: rgba(0, 0, 0, 0.2);
-  padding: 6px; /* Redus */
+  padding: 4px;
   border-radius: 10px;
 }
 
@@ -198,16 +208,17 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 6px; /* Spațiere mică */
+  margin-bottom: 4px;
   background: linear-gradient(
     135deg,
     rgba(131, 58, 180, 0.8),
     rgba(253, 29, 29, 0.8)
   );
   border-radius: 12px;
-  padding: 8px;
+  padding: 6px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 15px rgba(131, 58, 180, 0.3);
+  flex-shrink: 0; /* Don't shrink */
 }
 
 .instagram-section.visible {
@@ -216,40 +227,46 @@
 }
 
 .instagram-message {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .instagram-message p {
-  font-size: 0.7rem; /* Mic pentru a se încadra */
+  font-size: 0.65rem; /* Smaller text */
   color: white;
   font-weight: 600;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .instagram-input-container {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   justify-content: center;
 }
 
 .instagram-input {
   flex: 1;
-  padding: 6px 10px;
+  padding: 4px 8px;
   border: none;
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  font-size: 0.8rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  font-size: 0.75rem;
   text-align: center;
-  max-width: 180px;
+  max-width: 160px;
+  color: #333; /* Dark text color for better visibility */
 }
 
 .instagram-input:focus {
   outline: none;
   background-color: white;
   box-shadow: 0 0 0 2px #ffd700;
+  color: #000; /* Ensure black text when focused */
+}
+
+.instagram-input::placeholder {
+  color: #666; /* Dark placeholder text */
 }
 
 .instagram-submit-btn {
@@ -257,13 +274,13 @@
   color: white;
   border: none;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   transition: all 0.3s ease;
   font-weight: bold;
 }
@@ -283,7 +300,7 @@
 }
 
 .instagram-success p {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #ffd700;
   font-weight: 600;
   margin: 0;
@@ -295,12 +312,13 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 6px; /* Redus */
+  margin-bottom: 4px;
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  padding: 6px; /* Redus */
+  padding: 4px;
   border: 1px solid rgba(255, 215, 0, 0.3);
-  width: 100%; /* Ensure full width */
+  width: 100%;
+  flex-shrink: 0; /* Don't shrink */
 }
 
 .statistics-container.visible {
@@ -309,44 +327,44 @@
 }
 
 .statistics-title {
-  font-size: 0.8rem; /* Redus */
+  font-size: 0.75rem;
   font-weight: 600;
   color: #ffd700;
-  margin-bottom: 4px; /* Redus */
+  margin-bottom: 3px;
   text-align: center;
 }
 
 .statistics-loading {
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.7);
-  padding: 6px 0;
+  padding: 4px 0;
 }
 
 .statistics-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 4px; /* Redus */
-  width: 100%; /* Ensure full width */
+  gap: 3px;
+  width: 100%;
 }
 
 .statistic-item {
   text-align: center;
-  padding: 4px; /* Redus */
+  padding: 3px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .statistic-value {
-  font-size: 0.95rem; /* Redus */
+  font-size: 0.85rem;
   font-weight: bold;
   color: #ffd700;
   margin-bottom: 1px;
 }
 
 .statistic-label {
-  font-size: 0.6rem; /* Redus */
+  font-size: 0.55rem;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -354,13 +372,13 @@
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 4px; /* Redus */
+  gap: 3px;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-top: 2px; /* Redus pentru spațiere mai bună */
-  width: 100%; /* Ensure full width */
-  align-items: center; /* Center buttons */
+  width: 100%;
+  align-items: center;
+  flex-shrink: 0; /* Don't shrink */
 }
 
 .action-buttons.visible {
@@ -371,15 +389,15 @@
 /* Stiluri pentru butoane */
 .restart-button,
 .share-button {
-  padding: 6px 0; /* Redus */
+  padding: 4px 0;
   border-radius: 30px;
   border: none;
-  font-size: 0.8rem; /* Redus */
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  max-width: 90%; /* Mărit de la 80% pentru spațiere mai bună */
+  max-width: 90%;
 }
 
 .restart-button {
@@ -412,35 +430,35 @@
   background-color: #1a0303;
   border: 2px solid #ffd700;
   border-radius: 15px;
-  padding: 20px; /* Redus de la 25px */
+  padding: 15px;
   width: 90%;
-  max-width: 350px;
+  max-width: 320px;
   text-align: center;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 
 .share-modal-content h3 {
   color: #ffd700;
-  margin-bottom: 15px; /* Redus de la 20px */
-  font-size: 1.2rem; /* Redus de la 1.4rem */
+  margin-bottom: 12px;
+  font-size: 1.1rem;
 }
 
 .share-options {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Redus de la 15px */
-  margin-bottom: 15px; /* Redus de la 20px */
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .share-option-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 10px 12px; /* Redus de la 12px 15px */
+  gap: 8px;
+  padding: 8px 10px;
   border-radius: 10px;
   border: none;
-  font-size: 1rem; /* Redus de la 1.1rem */
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -448,7 +466,7 @@
 }
 
 .share-option-button .icon {
-  font-size: 1.2rem; /* Redus de la 1.3rem */
+  font-size: 1.1rem;
 }
 
 .share-option-button.instagram {
@@ -478,10 +496,10 @@
   background-color: rgba(255, 255, 255, 0.2);
   color: white;
   border: none;
-  padding: 8px 16px; /* Redus de la 10px 20px */
+  padding: 6px 14px;
   border-radius: 50px;
   cursor: pointer;
-  font-size: 0.9rem; /* Redus de la 1rem */
+  font-size: 0.8rem;
   transition: all 0.3s ease;
 }
 
@@ -516,11 +534,62 @@
   }
 }
 
-/* Media query pentru telefoane mici - ajustare specială */
-@media (max-height: 640px) {
+/* Media query pentru telefoane foarte mici */
+@media (max-height: 600px) {
+  .result-container {
+    padding: 4px 6px;
+  }
+
   .result-image-container {
-    width: 75px;
-    height: 75px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .category-label {
+    font-size: 0.7rem;
+  }
+
+  .feedback-message {
+    font-size: 0.6rem;
+    padding: 3px;
+  }
+
+  .instagram-message p {
+    font-size: 0.55rem;
+  }
+
+  .instagram-input {
+    font-size: 0.65rem;
+    padding: 3px 6px;
+  }
+
+  .instagram-submit-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+  }
+
+  .statistic-value {
+    font-size: 0.75rem;
+  }
+
+  .statistics-title {
+    font-size: 0.65rem;
+    margin-bottom: 2px;
+  }
+
+  .restart-button,
+  .share-button {
+    padding: 3px 0;
+    font-size: 0.65rem;
+  }
+}
+
+/* Media query pentru telefoane mici */
+@media (max-height: 640px) and (min-height: 601px) {
+  .result-image-container {
+    width: 70px;
+    height: 70px;
   }
 
   .category-label {
@@ -548,69 +617,106 @@
   }
 
   .statistic-value {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .statistics-title {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     margin-bottom: 3px;
   }
 
   .restart-button,
   .share-button {
-    padding: 5px 0;
-    font-size: 0.75rem;
+    padding: 4px 0;
+    font-size: 0.7rem;
   }
 }
 
 /* Media queries for taller screens */
 @media (min-height: 700px) {
   .result-container {
-    padding: 20px 18px;
+    padding: 15px 12px;
   }
 
   .result-image-container {
-    width: 140px;
-    height: 140px;
+    width: 120px;
+    height: 120px;
   }
 
   .category-label {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .feedback-message {
-    font-size: 0.9rem;
-    padding: 10px;
+    font-size: 0.8rem;
+    padding: 8px;
   }
 
   .instagram-message p {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .instagram-input {
-    font-size: 0.9rem;
-    padding: 8px 12px;
+    font-size: 0.85rem;
+    padding: 6px 10px;
   }
 
   .statistic-value {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .restart-button,
   .share-button {
-    padding: 8px 0;
-    font-size: 0.9rem;
+    padding: 6px 0;
+    font-size: 0.8rem;
   }
 }
 
 /* Adaptări pentru dispozitive mobile mai mari */
 @media (min-width: 480px) {
   .result-container {
-    padding: 20px 18px;
+    padding: 12px 15px;
   }
 
   .result-title {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+  }
+
+  .result-image-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .category-label {
+    font-size: 0.95rem;
+  }
+
+  .feedback-message {
+    font-size: 0.75rem;
+    padding: 6px;
+  }
+
+  .instagram-message p {
+    font-size: 0.7rem;
+  }
+
+  .statistics-title {
+    font-size: 0.85rem;
+  }
+
+  .statistic-value {
+    font-size: 0.95rem;
+  }
+
+  .statistic-label {
+    font-size: 0.6rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .result-container {
+    padding: 20px 18px;
+    max-width: 480px;
   }
 
   .result-image-container {
@@ -618,67 +724,30 @@
     height: 140px;
   }
 
-  .category-label {
-    font-size: 1.1rem;
-  }
-
-  .feedback-message {
-    font-size: 0.85rem;
-    padding: 10px;
-  }
-
-  .instagram-message p {
-    font-size: 0.8rem;
-  }
-
-  .statistics-title {
-    font-size: 1rem;
-  }
-
-  .statistic-value {
-    font-size: 1.1rem;
-  }
-
-  .statistic-label {
-    font-size: 0.7rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .result-container {
-    padding: 25px 22px;
-    max-width: 500px;
-  }
-
-  .result-image-container {
-    width: 180px;
-    height: 180px;
-  }
-
   .statistics-container {
-    padding: 15px;
+    padding: 10px;
   }
 
   .action-buttons {
     flex-direction: row;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
   }
 
   .restart-button,
   .share-button {
-    max-width: 180px;
-    padding: 10px 0;
-    font-size: 1rem;
+    max-width: 160px;
+    padding: 8px 0;
+    font-size: 0.9rem;
   }
 
   .feedback-message {
-    font-size: 1rem;
-    padding: 15px;
+    font-size: 0.9rem;
+    padding: 10px;
   }
 
   .instagram-message p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -695,9 +764,9 @@
 .statistics-loading::before {
   content: "";
   display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin-right: 8px;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-top: 2px solid #ffd700;
   border-radius: 50%;
