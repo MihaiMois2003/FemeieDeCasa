@@ -3,52 +3,47 @@
 /* Stiluri pentru ecranul de rezultate */
 .result-screen {
   min-height: 100vh;
-  height: 100vh; /* Force exact viewport height */
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 5px; /* Minimal padding */
+  align-items: flex-start; /* Changed from center to flex-start */
+  padding: 10px 5px; /* Increased top/bottom padding */
   color: white;
-  overflow: hidden;
+  overflow-y: auto; /* Allow scrolling if needed */
   width: 100%;
-  box-sizing: border-box; /* Include padding in height calculation */
+  box-sizing: border-box;
 }
 
 /* Containerul principal al rezultatelor */
 .result-container {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 15px;
-  padding: 6px 8px; /* Reduced padding for tighter fit */
+  padding: 15px 10px; /* Increased padding for better spacing */
   width: 100%;
   max-width: 450px;
   text-align: center;
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1;
-  height: calc(
-    100vh - 10px
-  ); /* Use almost full viewport height minus padding */
-  max-height: calc(100vh - 10px);
-  overflow-y: hidden;
+  /* Removed fixed height constraints */
+  min-height: calc(100vh - 20px); /* Minimum height with some margin */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Distribute space evenly */
-  margin-left: auto;
-  margin-right: auto;
+  gap: 15px; /* Add consistent spacing between sections */
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
 /* Titlul principal */
 .result-title {
-  font-size: 1.1rem; /* Slightly smaller */
-  margin-bottom: 5px; /* Reduced margin */
+  font-size: 1.2rem;
+  margin: 0; /* Remove margin, use gap instead */
   color: #ffd700;
   font-weight: 600;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   width: 100%;
   text-align: center;
-  flex-shrink: 0; /* Don't shrink */
+  flex-shrink: 0;
 }
 
 /* Stiluri pentru rezultat cu imagine */
@@ -56,12 +51,12 @@
   opacity: 0;
   transform: scale(0.5);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 4px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-shrink: 0; /* Don't shrink */
+  gap: 10px; /* Add gap between image and category */
+  flex-shrink: 0;
 }
 
 .result-display.visible {
@@ -71,11 +66,10 @@
 
 /* Container pentru imaginea rezultatului */
 .result-image-container {
-  width: 80px; /* Smaller for better fit */
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   overflow: hidden;
-  margin-bottom: 4px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
   border: 3px solid transparent;
   transition: border-color 0.5s ease;
@@ -92,15 +86,15 @@
 /* Stiluri pentru categoria scorului */
 .score-category {
   background-color: rgba(0, 0, 0, 0.3);
-  padding: 4px 10px; /* Reduced padding */
+  padding: 8px 15px;
   border-radius: 20px;
-  margin: 2px 0;
   transition: all 0.3s ease;
 }
 
 .category-label {
-  font-size: 0.8rem; /* Smaller font */
+  font-size: 0.9rem;
   font-weight: 600;
+  margin: 0;
 }
 
 /* Stiluri pentru diferite categorii de scor */
@@ -150,28 +144,28 @@
 }
 
 /* Colorarea bordurilor pentru imaginea rezultatului bazat pe categorie */
-.score-category.excellent + .result-image-container,
-.result-image-container + .score-category.excellent {
+.score-category.excellent ~ .result-image-container,
+.excellent .result-image-container {
   border-color: rgba(76, 175, 80, 0.8);
 }
 
-.score-category.good + .result-image-container,
-.result-image-container + .score-category.good {
+.score-category.good ~ .result-image-container,
+.good .result-image-container {
   border-color: rgba(255, 193, 7, 0.8);
 }
 
-.score-category.average + .result-image-container,
-.result-image-container + .score-category.average {
+.score-category.average ~ .result-image-container,
+.average .result-image-container {
   border-color: rgba(255, 152, 0, 0.8);
 }
 
-.score-category.poor + .result-image-container,
-.result-image-container + .score-category.poor {
+.score-category.poor ~ .result-image-container,
+.poor .result-image-container {
   border-color: rgba(255, 87, 34, 0.8);
 }
 
-.score-category.very-poor + .result-image-container,
-.result-image-container + .score-category.very-poor {
+.score-category.very-poor ~ .result-image-container,
+.very-poor .result-image-container {
   border-color: rgba(244, 67, 54, 0.8);
 }
 
@@ -180,11 +174,9 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 4px;
   width: 100%;
   text-align: center;
-  flex-shrink: 1; /* Allow to shrink if needed */
-  min-height: 0; /* Allow to be smaller */
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .feedback-container.visible {
@@ -194,13 +186,14 @@
 
 /* Mesajul de feedback */
 .feedback-message {
-  font-size: 0.7rem; /* Smaller text */
-  line-height: 1.2;
+  font-size: 0.8rem;
+  line-height: 1.4;
   color: rgba(255, 255, 255, 0.9);
   text-align: center;
   background-color: rgba(0, 0, 0, 0.2);
-  padding: 4px;
+  padding: 12px;
   border-radius: 10px;
+  margin: 0;
 }
 
 /* Instagram Section Styles */
@@ -208,17 +201,16 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 4px;
   background: linear-gradient(
     135deg,
     rgba(131, 58, 180, 0.8),
     rgba(253, 29, 29, 0.8)
   );
   border-radius: 12px;
-  padding: 6px;
+  padding: 15px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 15px rgba(131, 58, 180, 0.3);
-  flex-shrink: 0; /* Don't shrink */
+  flex-shrink: 0;
 }
 
 .instagram-section.visible {
@@ -227,46 +219,46 @@
 }
 
 .instagram-message {
-  margin-bottom: 6px;
+  margin-bottom: 12px;
 }
 
 .instagram-message p {
-  font-size: 0.65rem; /* Smaller text */
+  font-size: 0.75rem;
   color: white;
   font-weight: 600;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   margin: 0;
-  line-height: 1.1;
+  line-height: 1.3;
 }
 
 .instagram-input-container {
   display: flex;
-  gap: 6px;
+  gap: 10px;
   align-items: center;
   justify-content: center;
 }
 
 .instagram-input {
   flex: 1;
-  padding: 4px 8px;
+  padding: 8px 12px;
   border: none;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.95);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   text-align: center;
-  max-width: 160px;
-  color: #333; /* Dark text color for better visibility */
+  max-width: 180px;
+  color: #333;
 }
 
 .instagram-input:focus {
   outline: none;
   background-color: white;
   box-shadow: 0 0 0 2px #ffd700;
-  color: #000; /* Ensure black text when focused */
+  color: #000;
 }
 
 .instagram-input::placeholder {
-  color: #666; /* Dark placeholder text */
+  color: #666;
 }
 
 .instagram-submit-btn {
@@ -274,13 +266,13 @@
   color: white;
   border: none;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
   font-weight: bold;
 }
@@ -300,7 +292,7 @@
 }
 
 .instagram-success p {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: #ffd700;
   font-weight: 600;
   margin: 0;
@@ -312,13 +304,12 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  margin-bottom: 4px;
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  padding: 4px;
+  padding: 15px;
   border: 1px solid rgba(255, 215, 0, 0.3);
   width: 100%;
-  flex-shrink: 0; /* Don't shrink */
+  flex-shrink: 0;
 }
 
 .statistics-container.visible {
@@ -327,44 +318,44 @@
 }
 
 .statistics-title {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #ffd700;
-  margin-bottom: 3px;
+  margin: 0 0 10px 0;
   text-align: center;
 }
 
 .statistics-loading {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.7);
-  padding: 4px 0;
+  padding: 10px 0;
 }
 
 .statistics-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 3px;
+  gap: 8px;
   width: 100%;
 }
 
 .statistic-item {
   text-align: center;
-  padding: 3px;
+  padding: 8px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .statistic-value {
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #ffd700;
-  margin-bottom: 1px;
+  margin-bottom: 4px;
 }
 
 .statistic-label {
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -372,13 +363,14 @@
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 10px;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
   width: 100%;
   align-items: center;
-  flex-shrink: 0; /* Don't shrink */
+  flex-shrink: 0;
+  margin-top: auto; /* Push to bottom if there's extra space */
 }
 
 .action-buttons.visible {
@@ -389,15 +381,15 @@
 /* Stiluri pentru butoane */
 .restart-button,
 .share-button {
-  padding: 4px 0;
+  padding: 12px 0;
   border-radius: 30px;
   border: none;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  max-width: 90%;
+  max-width: 280px;
 }
 
 .restart-button {
@@ -430,7 +422,7 @@
   background-color: #1a0303;
   border: 2px solid #ffd700;
   border-radius: 15px;
-  padding: 15px;
+  padding: 20px;
   width: 90%;
   max-width: 320px;
   text-align: center;
@@ -439,26 +431,26 @@
 
 .share-modal-content h3 {
   color: #ffd700;
-  margin-bottom: 12px;
-  font-size: 1.1rem;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
 }
 
 .share-options {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .share-option-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 8px 10px;
+  gap: 10px;
+  padding: 12px 15px;
   border-radius: 10px;
   border: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -466,7 +458,7 @@
 }
 
 .share-option-button .icon {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .share-option-button.instagram {
@@ -496,10 +488,10 @@
   background-color: rgba(255, 255, 255, 0.2);
   color: white;
   border: none;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 50px;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
 }
 
@@ -537,56 +529,11 @@
 /* Media query pentru telefoane foarte mici */
 @media (max-height: 600px) {
   .result-container {
-    padding: 4px 6px;
+    padding: 10px 8px;
+    gap: 8px;
+    min-height: auto;
   }
 
-  .result-image-container {
-    width: 60px;
-    height: 60px;
-  }
-
-  .category-label {
-    font-size: 0.7rem;
-  }
-
-  .feedback-message {
-    font-size: 0.6rem;
-    padding: 3px;
-  }
-
-  .instagram-message p {
-    font-size: 0.55rem;
-  }
-
-  .instagram-input {
-    font-size: 0.65rem;
-    padding: 3px 6px;
-  }
-
-  .instagram-submit-btn {
-    width: 24px;
-    height: 24px;
-    font-size: 0.7rem;
-  }
-
-  .statistic-value {
-    font-size: 0.75rem;
-  }
-
-  .statistics-title {
-    font-size: 0.65rem;
-    margin-bottom: 2px;
-  }
-
-  .restart-button,
-  .share-button {
-    padding: 3px 0;
-    font-size: 0.65rem;
-  }
-}
-
-/* Media query pentru telefoane mici */
-@media (max-height: 640px) and (min-height: 601px) {
   .result-image-container {
     width: 70px;
     height: 70px;
@@ -597,45 +544,77 @@
   }
 
   .feedback-message {
-    font-size: 0.65rem;
-    padding: 4px;
+    font-size: 0.7rem;
+    padding: 8px;
   }
 
   .instagram-message p {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
   }
 
   .instagram-input {
     font-size: 0.7rem;
-    padding: 4px 8px;
+    padding: 6px 10px;
   }
 
   .instagram-submit-btn {
-    width: 25px;
-    height: 25px;
+    width: 28px;
+    height: 28px;
     font-size: 0.8rem;
   }
 
   .statistic-value {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 
   .statistics-title {
-    font-size: 0.7rem;
-    margin-bottom: 3px;
+    font-size: 0.75rem;
+    margin-bottom: 6px;
   }
 
   .restart-button,
   .share-button {
-    padding: 4px 0;
-    font-size: 0.7rem;
+    padding: 8px 0;
+    font-size: 0.75rem;
   }
 }
 
-/* Media queries for taller screens */
+/* Media query pentru telefoane mici */
+@media (max-height: 640px) and (min-height: 601px) {
+  .result-container {
+    gap: 10px;
+  }
+
+  .result-image-container {
+    width: 80px;
+    height: 80px;
+  }
+
+  .category-label {
+    font-size: 0.8rem;
+  }
+
+  .feedback-message {
+    font-size: 0.75rem;
+    padding: 10px;
+  }
+
+  .instagram-message p {
+    font-size: 0.7rem;
+  }
+
+  .restart-button,
+  .share-button {
+    padding: 10px 0;
+    font-size: 0.8rem;
+  }
+}
+
+/* Media queries for larger screens */
 @media (min-height: 700px) {
   .result-container {
-    padding: 15px 12px;
+    padding: 25px 15px;
+    gap: 20px;
   }
 
   .result-image-container {
@@ -644,79 +623,76 @@
   }
 
   .category-label {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   .feedback-message {
-    font-size: 0.8rem;
-    padding: 8px;
+    font-size: 0.9rem;
+    padding: 15px;
   }
 
   .instagram-message p {
-    font-size: 0.75rem;
-  }
-
-  .instagram-input {
     font-size: 0.85rem;
-    padding: 6px 10px;
   }
 
   .statistic-value {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .restart-button,
   .share-button {
-    padding: 6px 0;
-    font-size: 0.8rem;
+    padding: 15px 0;
+    font-size: 0.9rem;
   }
 }
 
 /* Adaptări pentru dispozitive mobile mai mari */
 @media (min-width: 480px) {
   .result-container {
-    padding: 12px 15px;
+    padding: 20px 18px;
+    gap: 18px;
   }
 
   .result-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 
   .result-image-container {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
   }
 
   .category-label {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .feedback-message {
-    font-size: 0.75rem;
-    padding: 6px;
+    font-size: 0.85rem;
+    padding: 12px;
   }
 
   .instagram-message p {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 
   .statistics-title {
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
 
   .statistic-value {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
   }
 
   .statistic-label {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
   }
 }
 
 @media (min-width: 768px) {
   .result-container {
-    padding: 20px 18px;
-    max-width: 480px;
+    padding: 30px 25px;
+    max-width: 500px;
+    gap: 25px;
   }
 
   .result-image-container {
@@ -725,29 +701,29 @@
   }
 
   .statistics-container {
-    padding: 10px;
+    padding: 20px;
   }
 
   .action-buttons {
     flex-direction: row;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
   }
 
   .restart-button,
   .share-button {
-    max-width: 160px;
-    padding: 8px 0;
-    font-size: 0.9rem;
+    max-width: 180px;
+    padding: 12px 0;
+    font-size: 1rem;
   }
 
   .feedback-message {
-    font-size: 0.9rem;
-    padding: 10px;
+    font-size: 1rem;
+    padding: 18px;
   }
 
   .instagram-message p {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 }
 
