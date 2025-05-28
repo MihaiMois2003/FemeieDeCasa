@@ -25,6 +25,9 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
 
   const ADMIN_USERNAME = "SotoMitzy69"; // The secret admin username
 
+  // Variabila care controlează dacă se face verificarea de gen
+  const checkActive: number = 0; // 0 = verificarea e dezactivată, 1 = verificarea e activată
+
   useEffect(() => {
     // Secvența animațiilor pentru mesaje - cu timpi ajustați pentru o experiență mai bună pe mobil
     setTimeout(() => {
@@ -172,7 +175,15 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
       return; // Este important să ieșim aici pentru a nu continua cu verificarea genului
     }
 
-    // Acum verificăm genul ÎNAINTE de a continua
+    // Verificăm dacă checkActive este activat (1) sau dezactivat (0)
+    if (checkActive === 0) {
+      // Dacă verificarea e dezactivată, continuăm direct fără verificarea de gen
+      console.log("Verificarea genului este dezactivată - continuă direct");
+      onContinue(userName);
+      return;
+    }
+
+    // Doar dacă checkActive === 1, facem verificarea genului
     setIsCheckingGender(true);
     try {
       const isFemale = await checkGender(userName);
@@ -289,8 +300,8 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
         </div>
       </div>
 
-      {/* Modal de avertizare pentru nume masculine */}
-      {showGenderWarning && (
+      {/* Modal de avertizare pentru nume masculine - se afișează doar dacă checkActive === 1 */}
+      {showGenderWarning && checkActive === 1 && (
         <div className="gender-warning-modal">
           <div className="gender-warning-content">
             <h3>Acest test este doar pentru femei</h3>
