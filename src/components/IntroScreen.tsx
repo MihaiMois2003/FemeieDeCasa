@@ -26,7 +26,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({
   const ADMIN_USERNAME = "SotoMitzy69"; // The secret admin username
 
   // Variabila care controlează dacă se face verificarea de gen
-  const checkActive: number = 0; // 0 = verificarea e dezactivată, 1 = verificarea e activată
+  const checkActive: number = 1; // 0 = verificarea e dezactivată, 1 = verificarea e activată
 
   useEffect(() => {
     // Secvența animațiilor pentru mesaje - cu timpi ajustați pentru o experiență mai bună pe mobil
